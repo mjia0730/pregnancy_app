@@ -22,7 +22,7 @@ final _firestore = FirebaseFirestore.instance;
 class _LoginScreenState extends State<LoginScreen>{
   late String email;
   late String password;
-  Users user = Users(username: '', email: '', password: '', age: '', marriage_year: '', num_children: '');
+  Users user = Users(uid:'', username: '', email: '', password: '', age: '', marriage_year: '', num_children: '');
   bool sign_in = false;
   bool _rememberMe = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen>{
           value.docs.forEach((element) {
             _firestore.collection('user').doc(element.id)
             .get().then((value){
-                user = Users(username: value['username'].toString(), 
+                user = Users(uid: element.id, username: value['username'].toString(), 
                 email: value['email'].toString(), password: value['password'].toString(),
                 age: value['age'].toString(), marriage_year: value['marriage_year'].toString(),
                 num_children: value['num_children'].toString());
@@ -256,7 +256,7 @@ class _LoginScreenState extends State<LoginScreen>{
                                     value.docs.forEach((element) {
                                       _firestore.collection('user').doc(element.id)
                                       .get().then((value){
-                                          user = Users(username: value['username'].toString(), 
+                                          user = Users(uid: element.id, username: value['username'].toString(), 
                                           email: value['email'].toString(), password: value['password'].toString(),
                                           age: value['age'].toString(), marriage_year: value['marriage_year'].toString(),
                                           num_children: value['num_children'].toString());

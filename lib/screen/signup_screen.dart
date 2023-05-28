@@ -18,6 +18,8 @@ class RegistrationScreen extends StatefulWidget{
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen>{
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
   String username = "";
   String email = "";
   String password = "";
@@ -27,12 +29,12 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
   final _formKey = GlobalKey<FormState>();
   var confirmPass;
 
-  late Users user;
+  Users user = Users(uid:'', username: '', email: '', password: '', age: '', marriage_year: '', num_children: '');
 
   @override
   Widget build(BuildContext context){
-    final _auth = FirebaseAuth.instance;
-    final _firestore = FirebaseFirestore.instance;
+    final auth = FirebaseAuth.instance;
+    final firestore = FirebaseFirestore.instance;
 
     return Scaffold(
       body: SafeArea(
@@ -88,7 +90,7 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
                   onTap: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context)=> LoginScreen())
+                      MaterialPageRoute(builder: (context)=> const LoginScreen())
                     );
                   },
                   child: const Text(
@@ -337,17 +339,56 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
                                   !_formKey.currentState!.validate()
                               ? null
                               : () {
-                                  _auth.createUserWithEmailAndPassword(email: email, password: password);
-                                  _firestore.collection('user').doc().set({
-                                    'username': username,
-                                    'email': email,
-                                    'password': password,
-                                    'age': age,
-                                    'marriage_year': marriage_year,
-                                    'num_children': num_children
-                                  }).then((value) => print("Successful Registration")).catchError((error) => print("Unsuccesful Registration"));
-
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+                                  try{
+                                    auth.createUserWithEmailAndPassword(email: email, password: password);
+                                    _auth.currentUser?.reload();
+                                    firestore.collection('user').add({
+                                      'username': username,
+                                      'email': email,
+                                      'password': password,
+                                      'age': age,
+                                      'marriage_year': marriage_year,
+                                      'num_children': num_children
+                                    });
+                                    _firestore.collection('user').where('email', isEqualTo: email)
+                                    .where('password', isEqualTo: password).limit(1).get()
+                                    .then((value) {
+                                      value.docs.forEach((element) {
+                                        _firestore.collection('user').doc(element.id)
+                                        .get().then((value){
+                                            user = Users(uid: element.id, username: value['username'].toString(), 
+                                            email: value['email'].toString(), password: value['password'].toString(),
+                                            age: value['age'].toString(), marriage_year: value['marriage_year'].toString(),
+                                            num_children: value['num_children'].toString());
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(
+                                                content: Text('success'),
+                                                backgroundColor: Colors.green,
+                                              ),
+                                            );
+                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user)));
+                                        });
+                                        });
+                                    });
+                                    
+                                  } on FirebaseAuthException catch (e){
+                                    String text = '';
+                                    if (e.code == "email-already-in-use") {
+                                        text = "The email address is already in use";
+                                    } else if (e.code == "invalid-email") {
+                                        text = "The email address is not valid.";
+                                    } else if (e.code == "operation-not-allowed") {
+                                        text = "Operation not allowed.";
+                                    } else if (e.code == "weak-password") {
+                                        text = "The password is too weak.";
+                                    }
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(text),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
+                                  };
                                 },
                           child: const Text("Register", textAlign: TextAlign.center,),
                         ),
