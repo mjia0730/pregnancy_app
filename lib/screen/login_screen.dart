@@ -2,11 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pregnancy_app/constant.dart';
+import 'package:pregnancy_app/model/users.dart';
 import 'package:pregnancy_app/screen/homescreen.dart';
 import 'package:pregnancy_app/screen/signup_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -19,6 +22,7 @@ final _firestore = FirebaseFirestore.instance;
 class _LoginScreenState extends State<LoginScreen>{
   late String email;
   late String password;
+  Users user = Users(username: '', email: '', password: '', age: '', marriage_year: '', num_children: '');
   bool sign_in = false;
   bool _rememberMe = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -35,8 +39,20 @@ class _LoginScreenState extends State<LoginScreen>{
       email = pref.getString('email').toString();
       password = pref.getString('password').toString();
       _auth.signInWithEmailAndPassword(email: email, password: password);
-      Navigator.pushReplacement(
-          context, new MaterialPageRoute(builder: (context) => HomeScreen()));
+      _firestore.collection('user').where('email', isEqualTo: email)
+        .where('password', isEqualTo: password).limit(1).get()
+        .then((value) {
+          value.docs.forEach((element) {
+            _firestore.collection('user').doc(element.id)
+            .get().then((value){
+                user = Users(username: value['username'].toString(), 
+                email: value['email'].toString(), password: value['password'].toString(),
+                age: value['age'].toString(), marriage_year: value['marriage_year'].toString(),
+                num_children: value['num_children'].toString());
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user)));
+            });
+            });
+        });
     }
   }
 
@@ -102,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen>{
                   onTap: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context)=> RegistrationScreen())
+                      MaterialPageRoute(builder: (context)=> const RegistrationScreen())
                     );
                   },
                   child: const Text(
@@ -233,7 +249,21 @@ class _LoginScreenState extends State<LoginScreen>{
                                   if(_rememberMe == true){
                                     setEmailandPassword();
                                   }
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+                                  
+                                  _firestore.collection('user').where('email', isEqualTo: email)
+                                  .where('password', isEqualTo: password).limit(1).get()
+                                  .then((value) {
+                                    value.docs.forEach((element) {
+                                      _firestore.collection('user').doc(element.id)
+                                      .get().then((value){
+                                          user = Users(username: value['username'].toString(), 
+                                          email: value['email'].toString(), password: value['password'].toString(),
+                                          age: value['age'].toString(), marriage_year: value['marriage_year'].toString(),
+                                          num_children: value['num_children'].toString());
+                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user)));
+                                      });
+                                      });
+                                  });
                                 },
                           child: const Text("Log In", textAlign: TextAlign.center,),
                         ),
