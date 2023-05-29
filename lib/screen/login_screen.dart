@@ -22,7 +22,7 @@ final _firestore = FirebaseFirestore.instance;
 class _LoginScreenState extends State<LoginScreen>{
   late String email;
   late String password;
-  Users user = Users(uid:'', username: '', email: '', password: '', age: '', marriage_year: '', num_children: '');
+  Users user = Users(uid:'', username: '', email: '', password: '', age: '', emergency_contact: '', marriage_year: '', num_children: '');
   bool sign_in = false;
   bool _rememberMe = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -47,7 +47,8 @@ class _LoginScreenState extends State<LoginScreen>{
             .get().then((value){
                 user = Users(uid: element.id, username: value['username'].toString(), 
                 email: value['email'].toString(), password: value['password'].toString(),
-                age: value['age'].toString(), marriage_year: value['marriage_year'].toString(),
+                age: value['age'].toString(), emergency_contact: value['emergency_contact'].toString(),
+                marriage_year: value['marriage_year'].toString(),
                 num_children: value['num_children'].toString());
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user)));
             });
@@ -244,26 +245,36 @@ class _LoginScreenState extends State<LoginScreen>{
                           onPressed: _formKey.currentState == null ||
                                   !_formKey.currentState!.validate()
                               ? null
-                              : () {
-                                  _auth.signInWithEmailAndPassword(email: email, password: password);
-                                  if(_rememberMe == true){
-                                    setEmailandPassword();
+                              : () async{
+                                  try{
+                                    await _auth.signInWithEmailAndPassword(email: email, password: password);
+                                    if(_rememberMe == true){
+                                      setEmailandPassword();
+                                    }
+                                    
+                                    _firestore.collection('user').where('email', isEqualTo: email)
+                                    .where('password', isEqualTo: password).limit(1).get()
+                                    .then((value) {
+                                      value.docs.forEach((element) {
+                                        _firestore.collection('user').doc(element.id)
+                                        .get().then((value){
+                                            user = Users(uid: element.id, username: value['username'].toString(), 
+                                            email: value['email'].toString(), password: value['password'].toString(),
+                                            age: value['age'].toString(), emergency_contact: value['emergency_contact'].toString(),
+                                            marriage_year: value['marriage_year'].toString(),
+                                            num_children: value['num_children'].toString());
+                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user)));
+                                        });
+                                        });
+                                    });
+                                  } on FirebaseAuthException catch (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(e.code),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
                                   }
-                                  
-                                  _firestore.collection('user').where('email', isEqualTo: email)
-                                  .where('password', isEqualTo: password).limit(1).get()
-                                  .then((value) {
-                                    value.docs.forEach((element) {
-                                      _firestore.collection('user').doc(element.id)
-                                      .get().then((value){
-                                          user = Users(uid: element.id, username: value['username'].toString(), 
-                                          email: value['email'].toString(), password: value['password'].toString(),
-                                          age: value['age'].toString(), marriage_year: value['marriage_year'].toString(),
-                                          num_children: value['num_children'].toString());
-                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user)));
-                                      });
-                                      });
-                                  });
                                 },
                           child: const Text("Log In", textAlign: TextAlign.center,),
                         ),

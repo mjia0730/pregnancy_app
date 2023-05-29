@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pregnancy_app/constant.dart';
 import 'package:pregnancy_app/model/users.dart';
-import 'package:pregnancy_app/screen/homescreen.dart';
 import 'package:pregnancy_app/screen/login_screen.dart';
+import 'package:pregnancy_app/screen/signup_success_screen.dart';
 
 class RegistrationScreen extends StatefulWidget{
   
@@ -24,12 +24,13 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
   String email = "";
   String password = "";
   String age = "";
+  String emergency_contact = "";
   String marriage_year = "";
   String num_children = "";
   final _formKey = GlobalKey<FormState>();
   var confirmPass;
 
-  Users user = Users(uid:'', username: '', email: '', password: '', age: '', marriage_year: '', num_children: '');
+  Users user = Users(uid:'', username: '', email: '', password: '', age: '', emergency_contact: '', marriage_year: '', num_children: '');
 
   @override
   Widget build(BuildContext context){
@@ -263,6 +264,36 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
                         },
                       ),
 
+                      //emergency_contact
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
+                      const Text('Emergency Contact',
+                        style: TextStyle(
+                          color: black,
+                          fontSize: 14,
+                          fontFamily: 'Poppins',
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w500
+                        )
+                      ),
+                      TextFormField(
+                        textAlign: TextAlign.left,
+                        decoration: TextFieldDecoration.copyWith(
+                          hintText: '01*-*******'
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            emergency_contact = value;
+                          });
+                        },
+                        validator: (value) {
+                          if(value == "" || value == null){
+                            return "Please enter your emergency contact";
+                          }else{
+                            return null;
+                          }
+                        },
+                      ),
+
                       //marriage_years
                       SizedBox(height: MediaQuery.of(context).size.height*0.05),
                       const Text('How long have you been married?',
@@ -338,15 +369,16 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
                           onPressed: _formKey.currentState == null ||
                                   !_formKey.currentState!.validate()
                               ? null
-                              : () {
+                              : () async{
                                   try{
-                                    auth.createUserWithEmailAndPassword(email: email, password: password);
+                                    await auth.createUserWithEmailAndPassword(email: email, password: password);
                                     _auth.currentUser?.reload();
                                     firestore.collection('user').add({
                                       'username': username,
                                       'email': email,
                                       'password': password,
                                       'age': age,
+                                      'emergency_contact': emergency_contact,
                                       'marriage_year': marriage_year,
                                       'num_children': num_children
                                     });
@@ -358,7 +390,8 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
                                         .get().then((value){
                                             user = Users(uid: element.id, username: value['username'].toString(), 
                                             email: value['email'].toString(), password: value['password'].toString(),
-                                            age: value['age'].toString(), marriage_year: value['marriage_year'].toString(),
+                                            age: value['age'].toString(), emergency_contact: value['emergency_contact'].toString(),
+                                            marriage_year: value['marriage_year'].toString(),
                                             num_children: value['num_children'].toString());
                                             ScaffoldMessenger.of(context).showSnackBar(
                                               const SnackBar(
@@ -366,7 +399,7 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
                                                 backgroundColor: Colors.green,
                                               ),
                                             );
-                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user)));
+                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignUpSuccess(user)));
                                         });
                                         });
                                     });
@@ -381,6 +414,8 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
                                         text = "Operation not allowed.";
                                     } else if (e.code == "weak-password") {
                                         text = "The password is too weak.";
+                                    } else{
+                                        text = e.code;
                                     }
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(

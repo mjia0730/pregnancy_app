@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:pregnancy_app/model/users.dart';
 import 'package:pregnancy_app/screen/login_screen.dart';
 import 'package:pregnancy_app/screen/signup_screen.dart';
+import 'package:pregnancy_app/screen/signup_success_screen.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,11 +19,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: 'signup_screen',
+      initialRoute: 'login_screen',
 
       routes: {
-        'login_screen':(context)=>LoginScreen(),
-        'signup_screen':(context)=>RegistrationScreen()
+        'login_screen':(context)=>const LoginScreen(),
+        'signup_screen':(context)=>const RegistrationScreen(),
       },
       title: 'Flutter Demo',
       theme: ThemeData(
