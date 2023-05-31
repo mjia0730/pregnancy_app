@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pregnancy_app/constant.dart';
 import 'package:pregnancy_app/model/users.dart';
-import 'package:pregnancy_app/screen/education.dart';
-import 'package:pregnancy_app/screen/home.dart';
-import 'package:pregnancy_app/screen/profile.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:table_calendar/table_calendar.dart';  
 
 class Calendar extends StatefulWidget{
   final Users user;
@@ -16,16 +16,14 @@ class Calendar extends StatefulWidget{
 class _CalendarState extends State<Calendar>{
   final Users user;
   _CalendarState(this.user);
-
+  CalendarController _controller = CalendarController();
 
   @override
   Widget build(BuildContext context){
-    final pageList = <Widget>[
-      Home(user),
-      Calendar(user),
-      Education(user),
-      Profile(user) 
-    ];
+    DateTime now = DateTime.now();
+    String date = DateFormat.yMMMd().format(now);
+    String day = DateFormat.EEEE().format(now);
+    
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -38,11 +36,36 @@ class _CalendarState extends State<Calendar>{
           fontWeight: FontWeight.w600
         ),
         textAlign: TextAlign.center,),
-        backgroundColor: Colors.white,
+        backgroundColor: pink.withOpacity(0.4),
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Image.asset('android/assets/icon/logo.png'),
         ),
+        actions: [
+          Container(
+            child: Column(
+              children: [
+                Text(date,
+                style: const TextStyle(
+                  color: black,
+                  fontSize: 14,
+                  fontFamily: 'Poppins',
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w400
+                ),),
+                SizedBox(height: MediaQuery.of(context).size.height*0.01),
+                Text(day,
+                style: const TextStyle(
+                  color: black,
+                  fontSize: 14,
+                  fontFamily: 'Poppins',
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w400
+                ),),
+              ],
+            )
+          )
+        ],
       ),
       body: SafeArea(
         child: Container(
