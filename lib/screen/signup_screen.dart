@@ -380,7 +380,8 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
                                       'age': age,
                                       'emergency_contact': emergency_contact,
                                       'marriage_year': marriage_year,
-                                      'num_children': num_children
+                                      'num_children': num_children,
+                                      'first_day': ''
                                     });
                                     _firestore.collection('user').where('email', isEqualTo: email)
                                     .where('password', isEqualTo: password).limit(1).get()
