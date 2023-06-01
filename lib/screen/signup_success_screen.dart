@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pregnancy_app/constant.dart';
-import 'package:pregnancy_app/model/pregnancy_cycle.dart';
+import 'package:pregnancy_app/model/diseases.dart';
 import 'package:pregnancy_app/model/users.dart';
 import 'package:pregnancy_app/screen/homescreen.dart';
 
@@ -86,7 +86,12 @@ class _SignUpSuccessState extends State<SignUpSuccess>{
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8))),
-                      onPressed:() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user, pregnancyCycle(first_day: '', height: '',weight: '')))),
+                      onPressed:() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user, Disease(first_day: '', bmi: 0.0, 
+                      weeks_pregnant: 0, fatigue: false, one_hour_plasma_glucose_level: 0.0, gestational_diabetes_history: false, 
+                      systolic_blood_pressure: 0, diastolic_blood_pressure: 0, haemoglobin_level: 0.0, calcium_level: 0.0, 
+                      phosphate_level: 0.0, urine_protein_level: 0.0, blood_creatinine_level: 0.0, blood_urea_nitrogen_level: 0.0, 
+                      vitamin_c_level: 0.0, gingivitis: false, ldlc_level: 0.0, hdlc_level: 0.0, family_history_heart_disease: false, 
+                      chest_pain: false, blurred_vision: false, floating_spots: false)))),
                       child: const Text("Continue", textAlign: TextAlign.center,),
                     ),
                   ),

@@ -81,7 +81,7 @@ class _FoodRecommendationState extends State<FoodRecommendation>{
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(snapshot.data?.docs[index]['name'],
+                          Text(snapshot.data?.docs[index]['Name'],
                           style: const TextStyle(
                             color: black,
                             fontSize: 14,
@@ -89,7 +89,7 @@ class _FoodRecommendationState extends State<FoodRecommendation>{
                             fontStyle: FontStyle.normal,
                             fontWeight: FontWeight.w400
                           )),
-                          if(snapshot.data?.docs[index]['veg_non']=='veg')...[
+                          if(snapshot.data?.docs[index]['Veg_Non']=='veg')...[
                             const Text('Veg',
                             style: TextStyle(
                               color: green,
@@ -116,13 +116,13 @@ class _FoodRecommendationState extends State<FoodRecommendation>{
                 onTap: () {
                   Meal meal = Meal(category: snapshot.data?.docs[index]['catagory'], 
                       description: snapshot.data?.docs[index]['description'], 
-                      diet: snapshot.data?.docs[index]['diet'], 
-                      disease: snapshot.data?.docs[index]['disease'], 
-                      meal_id: snapshot.data?.docs[index]['meal_id'], 
-                      name: snapshot.data?.docs[index]['name'], 
-                      nutrient: snapshot.data?.docs[index]['nutrient'], 
-                      price: snapshot.data!.docs[index]['price'].toString(), 
-                      veg_non: snapshot.data?.docs[index]['veg_non']);
+                      diet: snapshot.data?.docs[index]['Diet'], 
+                      disease: snapshot.data?.docs[index]['Disease'], 
+                      meal_id: snapshot.data?.docs[index]['Meal_Id'], 
+                      name: snapshot.data?.docs[index]['Name'], 
+                      nutrient: snapshot.data?.docs[index]['Nutrient'], 
+                      price: snapshot.data!.docs[index]['Price'].toString(), 
+                      veg_non: snapshot.data?.docs[index]['Veg_Non']);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => MealDetailScreen(meal)),

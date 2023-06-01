@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pregnancy_app/constant.dart';
-import 'package:pregnancy_app/model/pregnancy_cycle.dart';
+import 'package:pregnancy_app/model/diseases.dart';
 import 'package:pregnancy_app/model/users.dart';
 import 'package:pregnancy_app/screen/homescreen.dart';
 import 'package:pregnancy_app/screen/login_success.dart';
@@ -25,7 +25,10 @@ class _LoginScreenState extends State<LoginScreen>{
   late String email;
   late String password;
   Users user = Users(uid:'', username: '', email: '', password: '', age: '', emergency_contact: '', marriage_year: '', num_children: '');
-  pregnancyCycle pc = pregnancyCycle(first_day: '', weight: '', height: '');
+  Disease disease = Disease(first_day: '', bmi: 0.0, weeks_pregnant: 0, fatigue: false, one_hour_plasma_glucose_level: 0.0, 
+  gestational_diabetes_history: false, systolic_blood_pressure: 0, diastolic_blood_pressure: 0, haemoglobin_level: 0.0, calcium_level: 0.0, 
+  phosphate_level: 0.0, urine_protein_level: 0.0, blood_creatinine_level: 0.0, blood_urea_nitrogen_level: 0.0, vitamin_c_level: 0.0, 
+  gingivitis: false, ldlc_level: 0.0, hdlc_level: 0.0, family_history_heart_disease: false, chest_pain: false, blurred_vision: false, floating_spots: false);
   bool sign_in = false;
   bool _rememberMe = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -54,17 +57,37 @@ class _LoginScreenState extends State<LoginScreen>{
                 marriage_year: value['marriage_year'].toString(),
                 num_children: value['num_children'].toString());
 
-                _firestore.collection('pregnancy_cycle').where('uid', isEqualTo: user.uid)
-                .get()
-                .then((value) {
-                  _firestore.collection('pregnancy_cycle').doc(element.id)
-                  .get().then((value){
-                      pc.first_day = value['first_day'].toString();
-                      pc.weight = value['weight'].toString();
-                      pc.height = value['height'].toString();
-                  });
-                });
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user, pc)));
+                disease.first_day = value['first_day'];
+                disease.bmi = value['bmi'];
+                disease.weeks_pregnant = value['weeks_pregnant'];
+                disease.fatigue = value['fatigue'];
+                disease.one_hour_plasma_glucose_level = value['1_hour_plasma_glucose_level'];
+                disease.gestational_diabetes_history = value['gestational_diabetes_history'];
+                disease.systolic_blood_pressure = value['systolic_blood_pressure'];
+                disease.diastolic_blood_pressure = value['diastolic_blood_pressure'];
+                disease.haemoglobin_level = value['haemoglobin_level'];
+                disease.calcium_level = value['calcium_level'];
+                disease.phosphate_level = value['phosphate_level'];
+                disease.urine_protein_level = value['urine_protein_level'];
+                disease.blood_creatinine_level = value['blood_creatinine_level'];
+                disease.blood_urea_nitrogen_level = value['blood_urea_nitrogen_level'];
+                disease.vitamin_c_level = value['vitamin_c_level'];
+                disease.gingivitis = value['gingivitis'];
+                disease.ldlc_level = value['ldlc_level'];
+                disease.hdlc_level = value['hdlc_level'];
+                disease.family_history_heart_disease = value['family_history_heart_disease'];
+                disease.chest_pain = value['chest_pain'];
+                disease.blurred_vision = value['blurred_vision'];
+                disease.floating_spots = value['floating_spots'];
+
+                DateTime now = DateTime.now();
+                var pregnancy_date = DateTime.parse(disease.first_day);
+                DateTime last_day = pregnancy_date.add(Duration(days: 280)).toLocal();
+                int remaining_day = last_day.difference(now).inDays;
+                int week = remaining_day%7;
+                disease.weeks_pregnant = week;
+
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user, disease)));
             });
             });
         });
@@ -278,20 +301,37 @@ class _LoginScreenState extends State<LoginScreen>{
                                             marriage_year: value['marriage_year'].toString(),
                                             num_children: value['num_children'].toString());
 
-                                            _firestore.collection('pregnancy_cycle').where('uid', isEqualTo: element.id)
-                                            .get()
-                                            .then((value) {
-                                              value.docs.forEach((element) {
-                                                _firestore.collection('pregnancy_cycle').doc(element.id)
-                                                .get().then((value){
-                                                    pc.first_day = value['first_day'].toString();
-                                                    pc.weight = value['weight'].toString();
-                                                    pc.height = value['height'].toString();
-                                                });
-                                                });
-                                            });
+                                            disease.first_day = value['first_day'];
+                                            disease.bmi = value['bmi'].toDouble();
+                                            disease.weeks_pregnant = value['weeks_pregnant'];
+                                            disease.fatigue = value['fatigue'];
+                                            disease.one_hour_plasma_glucose_level = value['1_hour_plasma_glucose_level'].toDouble();
+                                            disease.gestational_diabetes_history = value['gestational_diabetes_history'];
+                                            disease.systolic_blood_pressure = value['systolic_blood_pressure'];
+                                            disease.diastolic_blood_pressure = value['diastolic_blood_pressure'];
+                                            disease.haemoglobin_level = value['haemoglobin_level'].toDouble();
+                                            disease.calcium_level = value['calcium_level'].toDouble();
+                                            disease.phosphate_level = value['phosphate_level'].toDouble();
+                                            disease.urine_protein_level = value['urine_protein_level'].toDouble();
+                                            disease.blood_creatinine_level = value['blood_creatinine_level'].toDouble();
+                                            disease.blood_urea_nitrogen_level = value['blood_urea_nitrogen_level'].toDouble();
+                                            disease.vitamin_c_level = value['vitamin_c_level'].toDouble();
+                                            disease.gingivitis = value['gingivitis'];
+                                            disease.ldlc_level = value['ldlc_level'].toDouble();
+                                            disease.hdlc_level = value['hdlc_level'].toDouble();
+                                            disease.family_history_heart_disease = value['family_history_heart_disease'];
+                                            disease.chest_pain = value['chest_pain'];
+                                            disease.blurred_vision = value['blurred_vision'];
+                                            disease.floating_spots = value['floating_spots'];
 
-                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginSuccess(user, pc)));
+                                            DateTime now = DateTime.now();
+                                            var pregnancy_date = DateTime.parse(disease.first_day);
+                                            DateTime last_day = pregnancy_date.add(Duration(days: 280)).toLocal();
+                                            int remaining_day = last_day.difference(now).inDays;
+                                            int week = remaining_day%7;
+                                            disease.weeks_pregnant = week;
+
+                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginSuccess(user, disease)));
                                         });
                                         });
                                     });

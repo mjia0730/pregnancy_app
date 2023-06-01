@@ -5,20 +5,20 @@ import 'package:pregnancy_app/model/diseases.dart';
 import 'package:pregnancy_app/model/users.dart';
 import 'package:pregnancy_app/screen/homescreen.dart';
 
-class EditPregnancyCycle extends StatefulWidget{
+class EditUrineTest extends StatefulWidget{
   final Users user;
   final Disease disease;
-  EditPregnancyCycle(this.user, this.disease);
+  EditUrineTest(this.user, this.disease);
 
   @override
-  _EditPregnancyCycleState createState() => _EditPregnancyCycleState(user, disease);
+  _EditUrineTestState createState() => _EditUrineTestState(user, disease);
 }
 
-class _EditPregnancyCycleState extends State<EditPregnancyCycle>{
+class _EditUrineTestState extends State<EditUrineTest>{
 
   final Users user;
   final Disease disease;
-  _EditPregnancyCycleState(this.user, this.disease);
+  _EditUrineTestState(this.user, this.disease);
   final _firestore = FirebaseFirestore.instance;
 
   @override
@@ -26,7 +26,7 @@ class _EditPregnancyCycleState extends State<EditPregnancyCycle>{
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Pregnancy Cycle',
+        title: const Text('Urine Test',
         style: TextStyle(
           color: black,
           fontSize: 20,
@@ -53,10 +53,9 @@ class _EditPregnancyCycleState extends State<EditPregnancyCycle>{
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
-                //first_day
+                //urine_protein_level
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('First day of your last period: ',
+                const Text('Urine Protein Level: ',
                   style: TextStyle(
                     color: black,
                     fontSize: 14,
@@ -68,11 +67,11 @@ class _EditPregnancyCycleState extends State<EditPregnancyCycle>{
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
-                    hintText: 'yyyy-mm-dd'
+                    hintText: '(mg/24 hours)'
                   ),
                   onChanged: (value) {
                     setState(() {
-                      disease.first_day = value;
+                      disease.urine_protein_level = double.parse(value);
                     });
                   },
                 ),
@@ -92,15 +91,10 @@ class _EditPregnancyCycleState extends State<EditPregnancyCycle>{
                         onPressed: () async{
                             try{
                               await _firestore.collection('user').doc(user.uid).update({
-                                'first_day': disease.first_day,
+                                
+                                'urine_protein_level': disease.urine_protein_level,
+                                
                               });
-
-                              DateTime now = DateTime.now();
-                              var pregnancy_date = DateTime.parse(disease.first_day);
-                              DateTime last_day = pregnancy_date.add(Duration(days: 280)).toLocal();
-                              int remaining_day = last_day.difference(now).inDays;
-                              int week = remaining_day%7;
-                              disease.weeks_pregnant = week;
 
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -121,7 +115,7 @@ class _EditPregnancyCycleState extends State<EditPregnancyCycle>{
                               );
                             };
                           },
-                    child: const Text("Edit Pregnancy Cycle", textAlign: TextAlign.center,),
+                    child: const Text("Edit", textAlign: TextAlign.center,),
                   ),
                 ),
               ],

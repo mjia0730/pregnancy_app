@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:pregnancy_app/constant.dart';
-import 'package:pregnancy_app/model/pregnancy_cycle.dart';
+import 'package:pregnancy_app/model/diseases.dart';
 import 'package:pregnancy_app/model/users.dart';
 import 'package:pregnancy_app/screen/homescreen.dart';
 
 class LoginSuccess extends StatefulWidget{
   final Users user;
-  final pregnancyCycle pc;
-  LoginSuccess(this.user, this.pc);
+  final Disease disease;
+  LoginSuccess(this.user, this.disease);
 
   @override
-  _LoginSuccessState createState() => _LoginSuccessState(user, pc);
+  _LoginSuccessState createState() => _LoginSuccessState(user, disease);
 
 }
 
 class _LoginSuccessState extends State<LoginSuccess>{
   final Users user;
-  final pregnancyCycle pc;
-  _LoginSuccessState(this.user, this.pc);
+  final Disease disease;
+  _LoginSuccessState(this.user, this.disease);
 
   @override
   Widget build(BuildContext context){
@@ -88,7 +88,7 @@ class _LoginSuccessState extends State<LoginSuccess>{
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8))),
-                      onPressed:() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user, pc))),
+                      onPressed:() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user, disease))),
                       child: const Text("Continue", textAlign: TextAlign.center,),
                     ),
                   ),
