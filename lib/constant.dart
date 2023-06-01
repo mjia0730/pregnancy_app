@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 const pink = Color(0xfff687b3);
 const black = Color(0xff1e293b);
 const yellow = Color(0xfffda402);
+const green = Color(0xff10c338);
+const red = Color(0xffe0122b);
 
 //UI design for text field where the user enter the email and password
 const TextFieldDecoration = InputDecoration(

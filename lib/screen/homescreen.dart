@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:pregnancy_app/constant.dart';
+import 'package:pregnancy_app/model/pregnancy_cycle.dart';
 import 'package:pregnancy_app/model/users.dart';
 import 'package:pregnancy_app/screen/calendar.dart';
-import 'package:pregnancy_app/screen/education.dart';
 import 'package:pregnancy_app/screen/home.dart';
 import 'package:pregnancy_app/screen/profile.dart';
 
 class HomeScreen extends StatefulWidget{
   final Users user;
-  HomeScreen(this.user);
+  final pregnancyCycle pc;
+  HomeScreen(this.user, this.pc);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState(user);
+  _HomeScreenState createState() => _HomeScreenState(user, pc);
 }
 
 class _HomeScreenState extends State<HomeScreen>{
   final Users user;
-  _HomeScreenState(this.user);
+  final pregnancyCycle pc;
+  _HomeScreenState(this.user, this.pc);
   int index = 0;
 
   @override
   Widget build(BuildContext context){
     final pageList = <Widget>[
-      Home(user),
+      Home(user, pc),
       Calendar(user),
-      Education(user),
       Profile(user) 
     ];
     return Scaffold(
@@ -47,10 +48,6 @@ class _HomeScreenState extends State<HomeScreen>{
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month),
             label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: 'Map',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

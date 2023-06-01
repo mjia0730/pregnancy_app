@@ -1,30 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pregnancy_app/constant.dart';
+import 'package:pregnancy_app/model/pregnancy_cycle.dart';
 import 'package:pregnancy_app/model/users.dart';
-import 'package:pregnancy_app/screen/profile.dart';
+import 'package:pregnancy_app/screen/home.dart';
+import 'package:pregnancy_app/screen/homescreen.dart';
 
-class EditProfile extends StatefulWidget{
+class EditPregnancyCycle extends StatefulWidget{
   final Users user;
-  EditProfile(this.user);
+  EditPregnancyCycle(this.user);
 
   @override
-  _EditProfileState createState() => _EditProfileState(user);
+  _EditPregnancyCycleState createState() => _EditPregnancyCycleState(user);
 }
 
-class _EditProfileState extends State<EditProfile>{
-  Users user;
+class _EditPregnancyCycleState extends State<EditPregnancyCycle>{
+
+  final Users user;
+  _EditPregnancyCycleState(this.user);
+  String first_day = '', weight = '', height = ''; 
   final _firestore = FirebaseFirestore.instance;
-  _EditProfileState(this.user);
 
   @override
   Widget build(BuildContext context){
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Edit Profile',
+        title: const Text('Pregnancy Cycle',
         style: TextStyle(
           color: black,
           fontSize: 20,
@@ -45,36 +47,16 @@ class _EditProfileState extends State<EditProfile>{
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           margin: const EdgeInsets.only(right: 20.0, left: 20.0, top: 60.0, bottom: 20.0),
+
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-                //email
+                
+                //first_day
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('Email',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  )
-                ),
-                Text(user.email,
-                  style: const TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  )
-                ),
-
-                //username
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('Username',
+                const Text('First day of your last period: ',
                   style: TextStyle(
                     color: black,
                     fontSize: 14,
@@ -86,103 +68,57 @@ class _EditProfileState extends State<EditProfile>{
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
-                    hintText: user.username
+                    hintText: 'yyyy-mm-dd'
                   ),
                   onChanged: (value) {
                     setState(() {
-                      user.username = value;
+                      first_day = value;
                     });
                   },
                 ),
 
-                //Age
+                //height
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('Age:',
+                const Text('Height: ',
                   style: TextStyle(
                     color: black,
                     fontSize: 14,
                     fontFamily: 'Poppins',
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w500
-                  )
+                  ),
                 ),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
-                    hintText: user.age
+                    hintText: '(m)'
                   ),
                   onChanged: (value) {
                     setState(() {
-                      user.age = value;
+                      height = value;
                     });
                   },
                 ),
 
-                //emergency_contact
+                //weight
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('Emergency Contact',
+                const Text('Weight: ',
                   style: TextStyle(
                     color: black,
                     fontSize: 14,
                     fontFamily: 'Poppins',
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w500
-                  )
+                  ),
                 ),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
-                    hintText: user.emergency_contact
+                    hintText: '(kg)'
                   ),
                   onChanged: (value) {
                     setState(() {
-                      user.emergency_contact = value;
-                    });
-                  },
-                ),
-
-                //marriage_years
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('How long have you been married?',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  )
-                ),
-                TextFormField(
-                  textAlign: TextAlign.left,
-                  decoration: TextFieldDecoration.copyWith(
-                    hintText: user.marriage_year
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      user.marriage_year = value;
-                    });
-                  },
-                ),
-
-                //num_children
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('How many children do you have?',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  )
-                ),
-                TextFormField(
-                  textAlign: TextAlign.left,
-                  decoration: TextFieldDecoration.copyWith(
-                    hintText: user.num_children
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      user.num_children = value;
+                      weight = value;
                     });
                   },
                 ),
@@ -201,13 +137,11 @@ class _EditProfileState extends State<EditProfile>{
                         borderRadius: BorderRadius.circular(8))),
                         onPressed: () async{
                             try{
-                              await _firestore.collection('user').doc(user.uid).update({
-                                'username': user.username,
-                                'email': user.email,
-                                'age': user.age,
-                                'emergency_contact': user.emergency_contact,
-                                'marriage_year': user.marriage_year,
-                                'num_children': user.num_children
+                              await _firestore.collection('pregnancy_cycle').add({
+                                'uid': user.uid,
+                                'first_day': first_day,
+                                'weight': weight,
+                                'height': height
                               });
 
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -217,7 +151,9 @@ class _EditProfileState extends State<EditProfile>{
                                 ),
                               );
 
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Profile(user)));
+                              pregnancyCycle pc = pregnancyCycle(first_day: first_day, weight: weight, height: height);
+
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user,pc)));
                               
                             } on FirebaseException catch (e){
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -228,14 +164,15 @@ class _EditProfileState extends State<EditProfile>{
                               );
                             };
                           },
-                    child: const Text("Edit Profile", textAlign: TextAlign.center,),
+                    child: const Text("Edit Pregnancy Cycle", textAlign: TextAlign.center,),
                   ),
                 ),
               ],
             ),
           ),
+
         ),
-      )
+      ),
     );
   }
 }

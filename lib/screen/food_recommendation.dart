@@ -1,0 +1,138 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:pregnancy_app/constant.dart';
+import 'package:pregnancy_app/model/meal.dart';
+import 'package:pregnancy_app/model/users.dart';
+import 'package:pregnancy_app/screen/meal_detail_screen.dart';
+
+class FoodRecommendation extends StatefulWidget{
+  final Users user;
+  FoodRecommendation(this.user);
+
+  @override
+  _FoodRecommendationState createState() => _FoodRecommendationState(user);
+}
+
+class _FoodRecommendationState extends State<FoodRecommendation>{
+  final Users user;
+  _FoodRecommendationState(this.user);
+  CollectionReference meals = FirebaseFirestore.instance.collection('meal');
+
+  @override
+  Widget build(BuildContext context){
+    
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Recommended Food',
+        style: TextStyle(
+          color: black,
+          fontSize: 24,
+          fontFamily: 'Poppins',
+          fontStyle: FontStyle.normal,
+          fontWeight: FontWeight.w500
+        ),
+        textAlign: TextAlign.center,),
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      body: StreamBuilder(
+        stream: meals.snapshots(),
+        builder: (context, snapshot){
+          if(snapshot.hasError){
+            return Text("Something is wrong");
+          }
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return Text("Loading");
+          }
+          return ListView.builder(
+            itemCount: snapshot.data?.size,
+            itemBuilder: (context, index){
+              return InkWell(
+                child: Container(
+                  margin: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(color: pink),
+                    color: Colors.white
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: MediaQuery.of(context).size.width*0.01),
+                      if(snapshot.data?.docs[index]['catagory'] == 'salad')...[
+                        Container(
+                          width: 44,
+                          height: 44,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('android/assets/salad.png'),
+                                  fit: BoxFit.fill)),
+                        ),
+                      ],
+
+                      SizedBox(width: MediaQuery.of(context).size.width*0.05),
+
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(snapshot.data?.docs[index]['name'],
+                          style: const TextStyle(
+                            color: black,
+                            fontSize: 14,
+                            fontFamily: 'Poppins',
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w400
+                          )),
+                          if(snapshot.data?.docs[index]['veg_non']=='veg')...[
+                            const Text('Veg',
+                            style: TextStyle(
+                              color: green,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w400
+                            )),
+                          ] else ... [
+                            const Text('Non-Veg',
+                            style: TextStyle(
+                              color: red,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w400
+                            )),
+                          ]
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Meal meal = Meal(category: snapshot.data?.docs[index]['catagory'], 
+                      description: snapshot.data?.docs[index]['description'], 
+                      diet: snapshot.data?.docs[index]['diet'], 
+                      disease: snapshot.data?.docs[index]['disease'], 
+                      meal_id: snapshot.data?.docs[index]['meal_id'], 
+                      name: snapshot.data?.docs[index]['name'], 
+                      nutrient: snapshot.data?.docs[index]['nutrient'], 
+                      price: snapshot.data!.docs[index]['price'].toString(), 
+                      veg_non: snapshot.data?.docs[index]['veg_non']);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MealDetailScreen(meal)),
+                  );
+                },
+              );
+            },
+          );
+        },
+      )
+    );
+  }
+}

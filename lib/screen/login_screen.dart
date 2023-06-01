@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pregnancy_app/constant.dart';
+import 'package:pregnancy_app/model/pregnancy_cycle.dart';
 import 'package:pregnancy_app/model/users.dart';
 import 'package:pregnancy_app/screen/homescreen.dart';
+import 'package:pregnancy_app/screen/login_success.dart';
 import 'package:pregnancy_app/screen/signup_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen>{
   late String email;
   late String password;
   Users user = Users(uid:'', username: '', email: '', password: '', age: '', emergency_contact: '', marriage_year: '', num_children: '');
+  pregnancyCycle pc = pregnancyCycle(first_day: '', weight: '', height: '');
   bool sign_in = false;
   bool _rememberMe = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -50,7 +53,18 @@ class _LoginScreenState extends State<LoginScreen>{
                 age: value['age'].toString(), emergency_contact: value['emergency_contact'].toString(),
                 marriage_year: value['marriage_year'].toString(),
                 num_children: value['num_children'].toString());
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user)));
+
+                _firestore.collection('pregnancy_cycle').where('uid', isEqualTo: user.uid)
+                .get()
+                .then((value) {
+                  _firestore.collection('pregnancy_cycle').doc(element.id)
+                  .get().then((value){
+                      pc.first_day = value['first_day'].toString();
+                      pc.weight = value['weight'].toString();
+                      pc.height = value['height'].toString();
+                  });
+                });
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user, pc)));
             });
             });
         });
@@ -263,7 +277,21 @@ class _LoginScreenState extends State<LoginScreen>{
                                             age: value['age'].toString(), emergency_contact: value['emergency_contact'].toString(),
                                             marriage_year: value['marriage_year'].toString(),
                                             num_children: value['num_children'].toString());
-                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user)));
+
+                                            _firestore.collection('pregnancy_cycle').where('uid', isEqualTo: element.id)
+                                            .get()
+                                            .then((value) {
+                                              value.docs.forEach((element) {
+                                                _firestore.collection('pregnancy_cycle').doc(element.id)
+                                                .get().then((value){
+                                                    pc.first_day = value['first_day'].toString();
+                                                    pc.weight = value['weight'].toString();
+                                                    pc.height = value['height'].toString();
+                                                });
+                                                });
+                                            });
+
+                                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginSuccess(user, pc)));
                                         });
                                         });
                                     });

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pregnancy_app/constant.dart';
 import 'package:pregnancy_app/model/users.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:table_calendar/table_calendar.dart';  
 
 class Calendar extends StatefulWidget{
   final Users user;
@@ -16,8 +14,7 @@ class Calendar extends StatefulWidget{
 class _CalendarState extends State<Calendar>{
   final Users user;
   _CalendarState(this.user);
-  CalendarController _controller = CalendarController();
-
+  
   @override
   Widget build(BuildContext context){
     DateTime now = DateTime.now();

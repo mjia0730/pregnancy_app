@@ -2,12 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pregnancy_app/constant.dart';
 import 'package:pregnancy_app/model/users.dart';
-import 'package:pregnancy_app/screen/calendar.dart';
 import 'package:pregnancy_app/screen/edit_profile.dart';
-import 'package:pregnancy_app/screen/education.dart';
-import 'package:pregnancy_app/screen/home.dart';
 import 'package:intl/intl.dart';
-import 'package:pregnancy_app/screen/homescreen.dart';
 import 'package:pregnancy_app/screen/login_screen.dart';
 
 class Profile extends StatefulWidget{
@@ -25,12 +21,7 @@ class _ProfileState extends State<Profile>{
 
   @override
   Widget build(BuildContext context){
-    final pageList = <Widget>[
-      Home(user),
-      Calendar(user),
-      Education(user),
-      Profile(user) 
-    ];
+    
     DateTime now = DateTime.now();
     String date = DateFormat.yMMMd().format(now);
     String day = DateFormat.EEEE().format(now);
@@ -46,7 +37,7 @@ class _ProfileState extends State<Profile>{
           fontWeight: FontWeight.w600
         ),
         textAlign: TextAlign.center,),
-        backgroundColor: Colors.white,
+        backgroundColor: pink.withOpacity(0.4),
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Image.asset('android/assets/icon/logo.png'),
@@ -89,7 +80,7 @@ class _ProfileState extends State<Profile>{
               children: [
                 //Profile Pic
                 SizedBox(height: MediaQuery.of(context).size.height*0.01),
-                CircleAvatar(
+                const CircleAvatar(
                   backgroundColor: Colors.transparent,
                   radius: 100,
                   

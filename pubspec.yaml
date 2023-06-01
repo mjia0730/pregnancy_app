@@ -44,6 +44,7 @@ dependencies:
   flutter_easyloading: ^3.0.5
   shared_preferences: ^2.0.15
   intl: ^0.17.0 
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +72,8 @@ flutter:
   assets:
     - android/assets/pregnant_lady.png
     - android/assets/icon/logo.png
+    - android/assets/pregnancy_cycle.png
+    - android/assets/salad.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

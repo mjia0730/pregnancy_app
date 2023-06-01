@@ -4,18 +4,20 @@ import 'package:pregnancy_app/model/pregnancy_cycle.dart';
 import 'package:pregnancy_app/model/users.dart';
 import 'package:pregnancy_app/screen/homescreen.dart';
 
-class SignUpSuccess extends StatefulWidget{
+class LoginSuccess extends StatefulWidget{
   final Users user;
-  SignUpSuccess(this.user);
+  final pregnancyCycle pc;
+  LoginSuccess(this.user, this.pc);
 
   @override
-  _SignUpSuccessState createState() => _SignUpSuccessState(user);
+  _LoginSuccessState createState() => _LoginSuccessState(user, pc);
 
 }
 
-class _SignUpSuccessState extends State<SignUpSuccess>{
+class _LoginSuccessState extends State<LoginSuccess>{
   final Users user;
-  _SignUpSuccessState(this.user);
+  final pregnancyCycle pc;
+  _LoginSuccessState(this.user, this.pc);
 
   @override
   Widget build(BuildContext context){
@@ -30,9 +32,9 @@ class _SignUpSuccessState extends State<SignUpSuccess>{
               mainAxisAlignment: MainAxisAlignment.center,
 
               children: [
-                //"Sign Up Successful"
+                //"Log In Successful"
                 SizedBox(height: MediaQuery.of(context).size.height*0.1),
-                const Text('Sign Up',
+                const Text('Log In',
                   style: TextStyle(
                     color: pink,
                     fontSize: 30,
@@ -86,7 +88,7 @@ class _SignUpSuccessState extends State<SignUpSuccess>{
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8))),
-                      onPressed:() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user, pregnancyCycle(first_day: '', height: '',weight: '')))),
+                      onPressed:() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user, pc))),
                       child: const Text("Continue", textAlign: TextAlign.center,),
                     ),
                   ),
