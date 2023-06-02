@@ -20,6 +20,7 @@ class _EditPregnancyCycleState extends State<EditPregnancyCycle>{
   final Disease disease;
   _EditPregnancyCycleState(this.user, this.disease);
   final _firestore = FirebaseFirestore.instance;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context){
@@ -53,77 +54,96 @@ class _EditPregnancyCycleState extends State<EditPregnancyCycle>{
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
-                //first_day
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('First day of your last period: ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  ),
-                ),
-                TextFormField(
-                  textAlign: TextAlign.left,
-                  decoration: TextFieldDecoration.copyWith(
-                    hintText: 'yyyy-mm-dd'
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      disease.first_day = value;
-                    });
-                  },
-                ),
-
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
 
-                //Button
-                SizedBox(
-                  width: MediaQuery.of(context).size.width*1.2,
-                  height: MediaQuery.of(context).size.height*0.05,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: pink,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8))),
-                        onPressed: () async{
-                            try{
-                              await _firestore.collection('user').doc(user.uid).update({
-                                'first_day': disease.first_day,
-                              });
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //first_day
+                      const Text('First day of your last period: ',
+                        style: TextStyle(
+                          color: black,
+                          fontSize: 14,
+                          fontFamily: 'Poppins',
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),
+                      TextFormField(
+                        textAlign: TextAlign.left,
+                        decoration: TextFieldDecoration.copyWith(
+                          hintText: 'yyyy-mm-dd'
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            disease.first_day = value;
+                          });
+                        },
+                        validator: (value) {
+                          if(value == "" || value == null){
+                            return "Please enter the first day of your last period";
+                          }else{
+                            return null;
+                          }
+                        },
+                      ),
 
-                              DateTime now = DateTime.now();
-                              var pregnancy_date = DateTime.parse(disease.first_day);
-                              DateTime last_day = pregnancy_date.add(Duration(days: 280)).toLocal();
-                              int remaining_day = last_day.difference(now).inDays;
-                              int week = remaining_day%7;
-                              disease.weeks_pregnant = week;
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Updated Successfully'),
-                                  backgroundColor: Colors.green,
-                                ),
-                              );
+                      //Button
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width*1.2,
+                        height: MediaQuery.of(context).size.height*0.05,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: pink,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8))),
+                              onPressed: _formKey.currentState == null ||
+                                        !_formKey.currentState!.validate()
+                                    ? null
+                                    : () async{
+                                  try{
+                                    await _firestore.collection('user').doc(user.uid).update({
+                                      'first_day': disease.first_day,
+                                    });
+
+                                    DateTime now = DateTime.now();
+                                    var pregnancy_date = DateTime.parse(disease.first_day);
+                                    DateTime last_day = pregnancy_date.add(Duration(days: 280)).toLocal();
+                                    int remaining_day = last_day.difference(now).inDays;
+                                    int week = remaining_day%7;
+                                    disease.weeks_pregnant = week;
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Updated Successfully'),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                    );
 
 
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user,disease)));
-                              
-                            } on FirebaseException catch (e){
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(e.code),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
-                            };
-                          },
-                    child: const Text("Edit Pregnancy Cycle", textAlign: TextAlign.center,),
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user,disease)));
+                                    
+                                  } on FirebaseException catch (e){
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(e.code),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
+                                  };
+                                },
+                          child: const Text("Edit Pregnancy Cycle", textAlign: TextAlign.center,),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                )
               ],
             ),
           ),

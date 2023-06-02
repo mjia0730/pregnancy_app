@@ -20,6 +20,7 @@ class _EditGeneralState extends State<EditGeneral>{
   final Disease disease;
   _EditGeneralState(this.user, this.disease);
   final _firestore = FirebaseFirestore.instance;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context){
@@ -53,101 +54,120 @@ class _EditGeneralState extends State<EditGeneral>{
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-                //bmi
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Row(
-                  children: [
-                    SizedBox(width: 8),
-                    Text('BMI:',
-                      style: TextStyle(
-                        color: black,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500
-                      )
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  textAlign: TextAlign.left,
-                  decoration: TextFieldDecoration.copyWith(
-                    hintText: 'Please input your BMI'
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      disease.bmi = double.parse(value);
-                    });
-                  },
-                ),
 
-                //fatigue
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                Row(
-                  children: [
-                    const SizedBox(width: 8),
-                    const Text('Feeling Fatigue? ',
-                      style: TextStyle(
-                        color: black,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //bmi
+                      const Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Text('BMI:',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(width: MediaQuery.of(context).size.width*0.05),
-                    Checkbox(
-                      value: disease.fatigue,
-                      onChanged: (value) {
-                        setState(() {
-                          disease.fatigue = value!;
-                        });
-                      },
-                    ),
-                  ],
-                ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        textAlign: TextAlign.left,
+                        decoration: TextFieldDecoration.copyWith(
+                          hintText: 'Please input your BMI'
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            disease.bmi = double.parse(value);
+                          });
+                        },
+                        validator: (value) {
+                          if(value == "" || value == null){
+                            return "Please enter your BMI";
+                          }else{
+                            return null;
+                          }
+                        },
+                      ),
 
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-
-                //Button
-                SizedBox(
-                  width: MediaQuery.of(context).size.width*1.2,
-                  height: MediaQuery.of(context).size.height*0.05,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: pink,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8))),
-                        onPressed: () async{
-                            try{
-                              await _firestore.collection('user').doc(user.uid).update({
-                                'bmi': disease.bmi,
-                                'fatigue': disease.fatigue,
+                      //fatigue
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
+                      Row(
+                        children: [
+                          const SizedBox(width: 8),
+                          const Text('Feeling Fatigue? ',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            ),
+                          ),
+                          SizedBox(width: MediaQuery.of(context).size.width*0.05),
+                          Checkbox(
+                            value: disease.fatigue,
+                            onChanged: (value) {
+                              setState(() {
+                                disease.fatigue = value!;
                               });
+                            },
+                          ),
+                        ],
+                      ),
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Updated Successfully'),
-                                  backgroundColor: Colors.green,
-                                ),
-                              );
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user,disease)));
-                              
-                            } on FirebaseException catch (e){
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(e.code),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
-                            };
-                          },
-                    child: const Text("Edit", textAlign: TextAlign.center,),
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
+
+                      //Button
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width*1.2,
+                        height: MediaQuery.of(context).size.height*0.05,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: pink,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8))),
+                              onPressed: _formKey.currentState == null ||
+                                        !_formKey.currentState!.validate()
+                                    ? null
+                                    : () async{
+                                  try{
+                                    await _firestore.collection('user').doc(user.uid).update({
+                                      'bmi': disease.bmi,
+                                      'fatigue': disease.fatigue,
+                                    });
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Updated Successfully'),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                    );
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user,disease)));
+                                    
+                                  } on FirebaseException catch (e){
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(e.code),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
+                                  };
+                                },
+                          child: const Text("Edit", textAlign: TextAlign.center,),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                )
               ],
             ),
           ),

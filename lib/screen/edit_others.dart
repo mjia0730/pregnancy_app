@@ -20,6 +20,7 @@ class _EditOthersState extends State<EditOthers>{
   final Disease disease;
   _EditOthersState(this.user, this.disease);
   final _firestore = FirebaseFirestore.instance;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context){
@@ -53,238 +54,257 @@ class _EditOthersState extends State<EditOthers>{
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
-                //hdlc_level
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Row(
-                  children: [
-                    SizedBox(width: 8),
-                    Text('HDLC Level: ',
-                      style: TextStyle(
-                        color: black,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500
-                      )
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  textAlign: TextAlign.left,
-                  decoration: TextFieldDecoration.copyWith(
-                    hintText: '(mmol/L)'
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      disease.hdlc_level = double.parse(value);
-                    });
-                  },
-                ),
 
-                //gestational_diabetes_history
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                Row(
-                  children: [
-                    const SizedBox(width: 8),
-                    const Text('Have Gestational Diabetes History? ',
-                      style: TextStyle(
-                        color: black,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //hdlc_level
+                      const Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Text('HDLC Level: ',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(width: MediaQuery.of(context).size.width*0.05),
-                    Checkbox(
-                      value: disease.gestational_diabetes_history,
-                      onChanged: (value) {
-                        setState(() {
-                          disease.gestational_diabetes_history = value!;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-
-                //gingivitis
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                Row(
-                  children: [
-                    const SizedBox(width: 8),
-                    const Text('Have Gingivitis? ',
-                      style: TextStyle(
-                        color: black,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        textAlign: TextAlign.left,
+                        decoration: TextFieldDecoration.copyWith(
+                          hintText: '(mmol/L)'
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            disease.hdlc_level = double.parse(value);
+                          });
+                        },
+                        validator: (value) {
+                          if(value == "" || value == null){
+                            return "Please enter your HDLC level";
+                          }else{
+                            return null;
+                          }
+                        },
                       ),
-                    ),
-                    SizedBox(width: MediaQuery.of(context).size.width*0.05),
-                    Checkbox(
-                      value: disease.gingivitis,
-                      onChanged: (value) {
-                        setState(() {
-                          disease.gingivitis = value!;
-                        });
-                      },
-                    ),
-                  ],
-                ),
 
-                //family_history_heart_disease
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                Row(
-                  children: [
-                    const SizedBox(width: 8),
-                    const Text('Have Family History Heart Disease? ',
-                      style: TextStyle(
-                        color: black,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500
-                      ),
-                    ),
-                    SizedBox(width: MediaQuery.of(context).size.width*0.05),
-                    Checkbox(
-                      value: disease.family_history_heart_disease,
-                      onChanged: (value) {
-                        setState(() {
-                          disease.family_history_heart_disease = value!;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-
-                //chest_pain
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                Row(
-                  children: [
-                    const SizedBox(width: 8),
-                    const Text('Have Chest Pain? ',
-                      style: TextStyle(
-                        color: black,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500
-                      ),
-                    ),
-                    SizedBox(width: MediaQuery.of(context).size.width*0.05),
-                    Checkbox(
-                      value: disease.chest_pain,
-                      onChanged: (value) {
-                        setState(() {
-                          disease.chest_pain = value!;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-
-                //blurred_vision
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                Row(
-                  children: [
-                    const SizedBox(width: 8),
-                    const Text('Have blurred vision? ',
-                      style: TextStyle(
-                        color: black,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500
-                      ),
-                    ),
-                    SizedBox(width: MediaQuery.of(context).size.width*0.05),
-                    Checkbox(
-                      value: disease.blurred_vision,
-                      onChanged: (value) {
-                        setState(() {
-                          disease.blurred_vision = value!;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-
-                //floating_spots
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                Row(
-                  children: [
-                    const SizedBox(width: 8),
-                    const Text('Have Floating Spots? ',
-                      style: TextStyle(
-                        color: black,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500
-                      ),
-                    ),
-                    SizedBox(width: MediaQuery.of(context).size.width*0.05),
-                    Checkbox(
-                      value: disease.floating_spots,
-                      onChanged: (value) {
-                        setState(() {
-                          disease.floating_spots = value!;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-
-                //Button
-                SizedBox(
-                  width: MediaQuery.of(context).size.width*1.2,
-                  height: MediaQuery.of(context).size.height*0.05,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: pink,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8))),
-                        onPressed: () async{
-                            try{
-                              await _firestore.collection('user').doc(user.uid).update({
-                                'gestational_diabetes_history': disease.gestational_diabetes_history,
-                                'gingivitis': disease.gingivitis,
-                                'hdlc_level': disease.hdlc_level,
-                                'family_history_heart_disease': disease.family_history_heart_disease,
-                                'chest_pain': disease.chest_pain,
-                                'blurred_vision': disease.blurred_vision,
-                                'floating_spots': disease.floating_spots
+                      //gestational_diabetes_history
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
+                      Row(
+                        children: [
+                          const SizedBox(width: 8),
+                          const Text('Have Gestational Diabetes History? ',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            ),
+                          ),
+                          SizedBox(width: MediaQuery.of(context).size.width*0.05),
+                          Checkbox(
+                            value: disease.gestational_diabetes_history,
+                            onChanged: (value) {
+                              setState(() {
+                                disease.gestational_diabetes_history = value!;
                               });
+                            },
+                          ),
+                        ],
+                      ),
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Updated Successfully'),
-                                  backgroundColor: Colors.green,
-                                ),
-                              );
+                      //gingivitis
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
+                      Row(
+                        children: [
+                          const SizedBox(width: 8),
+                          const Text('Have Gingivitis? ',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            ),
+                          ),
+                          SizedBox(width: MediaQuery.of(context).size.width*0.05),
+                          Checkbox(
+                            value: disease.gingivitis,
+                            onChanged: (value) {
+                              setState(() {
+                                disease.gingivitis = value!;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+
+                      //family_history_heart_disease
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
+                      Row(
+                        children: [
+                          const SizedBox(width: 8),
+                          const Text('Have Family History Heart Disease? ',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            ),
+                          ),
+                          SizedBox(width: MediaQuery.of(context).size.width*0.05),
+                          Checkbox(
+                            value: disease.family_history_heart_disease,
+                            onChanged: (value) {
+                              setState(() {
+                                disease.family_history_heart_disease = value!;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+
+                      //chest_pain
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
+                      Row(
+                        children: [
+                          const SizedBox(width: 8),
+                          const Text('Have Chest Pain? ',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            ),
+                          ),
+                          SizedBox(width: MediaQuery.of(context).size.width*0.05),
+                          Checkbox(
+                            value: disease.chest_pain,
+                            onChanged: (value) {
+                              setState(() {
+                                disease.chest_pain = value!;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+
+                      //blurred_vision
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
+                      Row(
+                        children: [
+                          const SizedBox(width: 8),
+                          const Text('Have blurred vision? ',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            ),
+                          ),
+                          SizedBox(width: MediaQuery.of(context).size.width*0.05),
+                          Checkbox(
+                            value: disease.blurred_vision,
+                            onChanged: (value) {
+                              setState(() {
+                                disease.blurred_vision = value!;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+
+                      //floating_spots
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
+                      Row(
+                        children: [
+                          const SizedBox(width: 8),
+                          const Text('Have Floating Spots? ',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            ),
+                          ),
+                          SizedBox(width: MediaQuery.of(context).size.width*0.05),
+                          Checkbox(
+                            value: disease.floating_spots,
+                            onChanged: (value) {
+                              setState(() {
+                                disease.floating_spots = value!;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
+
+                      //Button
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width*1.2,
+                        height: MediaQuery.of(context).size.height*0.05,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: pink,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8))),
+                              onPressed:_formKey.currentState == null ||
+                                        !_formKey.currentState!.validate()
+                                    ? null
+                                    : () async{
+                                  try{
+                                    await _firestore.collection('user').doc(user.uid).update({
+                                      'gestational_diabetes_history': disease.gestational_diabetes_history,
+                                      'gingivitis': disease.gingivitis,
+                                      'hdlc_level': disease.hdlc_level,
+                                      'family_history_heart_disease': disease.family_history_heart_disease,
+                                      'chest_pain': disease.chest_pain,
+                                      'blurred_vision': disease.blurred_vision,
+                                      'floating_spots': disease.floating_spots
+                                    });
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Updated Successfully'),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                    );
 
 
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user,disease)));
-                              
-                            } on FirebaseException catch (e){
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(e.code),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
-                            };
-                          },
-                    child: const Text("Edit Pregnancy Cycle", textAlign: TextAlign.center,),
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user,disease)));
+                                    
+                                  } on FirebaseException catch (e){
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(e.code),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
+                                  };
+                                },
+                          child: const Text("Edit Pregnancy Cycle", textAlign: TextAlign.center,),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                )
               ],
             ),
           ),

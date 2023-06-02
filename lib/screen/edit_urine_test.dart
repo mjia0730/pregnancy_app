@@ -20,6 +20,7 @@ class _EditUrineTestState extends State<EditUrineTest>{
   final Disease disease;
   _EditUrineTestState(this.user, this.disease);
   final _firestore = FirebaseFirestore.instance;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context){
@@ -53,77 +54,97 @@ class _EditUrineTestState extends State<EditUrineTest>{
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //urine_protein_level
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Row(
-                  children: [
-                    SizedBox(width: 8),
-                    Text('Urine Protein Level:',
-                      style: TextStyle(
-                        color: black,
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500
-                      )
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  textAlign: TextAlign.left,
-                  decoration: TextFieldDecoration.copyWith(
-                    hintText: '(mg/24 hours)'
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      disease.urine_protein_level = double.parse(value);
-                    });
-                  },
-                ),
-
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
 
-                //Button
-                SizedBox(
-                  width: MediaQuery.of(context).size.width*1.2,
-                  height: MediaQuery.of(context).size.height*0.05,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: pink,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8))),
-                        onPressed: () async{
-                            try{
-                              await _firestore.collection('user').doc(user.uid).update({
-                                
-                                'urine_protein_level': disease.urine_protein_level,
-                                
-                              });
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //urine_protein_level
+                      const Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Text('Urine Protein Level:',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      TextFormField(
+                        textAlign: TextAlign.left,
+                        decoration: TextFieldDecoration.copyWith(
+                          hintText: '(mg/24 hours)'
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            disease.urine_protein_level = double.parse(value);
+                          });
+                        },
+                        validator: (value) {
+                          if(value == "" || value == null){
+                            return "Please enter your urine protein level";
+                          }else{
+                            return null;
+                          }
+                        },
+                      ),
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Updated Successfully'),
-                                  backgroundColor: Colors.green,
-                                ),
-                              );
+                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
+
+                      //Button
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width*1.2,
+                        height: MediaQuery.of(context).size.height*0.05,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: pink,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8))),
+                              onPressed: _formKey.currentState == null ||
+                                        !_formKey.currentState!.validate()
+                                    ? null
+                                    : () async{
+                                  try{
+                                    await _firestore.collection('user').doc(user.uid).update({
+                                      
+                                      'urine_protein_level': disease.urine_protein_level,
+                                      
+                                    });
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Updated Successfully'),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                    );
 
 
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user,disease)));
-                              
-                            } on FirebaseException catch (e){
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(e.code),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
-                            };
-                          },
-                    child: const Text("Edit", textAlign: TextAlign.center,),
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user,disease)));
+                                    
+                                  } on FirebaseException catch (e){
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(e.code),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
+                                  };
+                                },
+                          child: const Text("Edit", textAlign: TextAlign.center,),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                )
               ],
             ),
           ),
