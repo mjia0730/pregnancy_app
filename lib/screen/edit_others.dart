@@ -56,15 +56,21 @@ class _EditOthersState extends State<EditOthers>{
                 
                 //hdlc_level
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('HDLC Level: ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  ),
+                const Row(
+                  children: [
+                    SizedBox(width: 8),
+                    Text('HDLC Level: ',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
@@ -81,6 +87,7 @@ class _EditOthersState extends State<EditOthers>{
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
                 Row(
                   children: [
+                    const SizedBox(width: 8),
                     const Text('Have Gestational Diabetes History? ',
                       style: TextStyle(
                         color: black,
@@ -106,6 +113,7 @@ class _EditOthersState extends State<EditOthers>{
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
                 Row(
                   children: [
+                    const SizedBox(width: 8),
                     const Text('Have Gingivitis? ',
                       style: TextStyle(
                         color: black,
@@ -131,6 +139,7 @@ class _EditOthersState extends State<EditOthers>{
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
                 Row(
                   children: [
+                    const SizedBox(width: 8),
                     const Text('Have Family History Heart Disease? ',
                       style: TextStyle(
                         color: black,
@@ -156,6 +165,7 @@ class _EditOthersState extends State<EditOthers>{
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
                 Row(
                   children: [
+                    const SizedBox(width: 8),
                     const Text('Have Chest Pain? ',
                       style: TextStyle(
                         color: black,
@@ -181,6 +191,7 @@ class _EditOthersState extends State<EditOthers>{
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
                 Row(
                   children: [
+                    const SizedBox(width: 8),
                     const Text('Have blurred vision? ',
                       style: TextStyle(
                         color: black,
@@ -206,6 +217,7 @@ class _EditOthersState extends State<EditOthers>{
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
                 Row(
                   children: [
+                    const SizedBox(width: 8),
                     const Text('Have Floating Spots? ',
                       style: TextStyle(
                         color: black,

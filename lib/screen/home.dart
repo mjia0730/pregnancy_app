@@ -93,7 +93,7 @@ class _HomeState extends State<Home>{
                                 fontSize: 16,
                                 fontFamily: 'Poppins',
                                 fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400
+                                fontWeight: FontWeight.bold
                               ),),
                               SizedBox(height: MediaQuery.of(context).size.height*0.01, width: MediaQuery.of(context).size.width*0.5),
                               Text(day,
@@ -102,7 +102,7 @@ class _HomeState extends State<Home>{
                                 fontSize: 16,
                                 fontFamily: 'Poppins',
                                 fontStyle: FontStyle.normal,
-                                fontWeight: FontWeight.w400
+                                fontWeight: FontWeight.bold
                               ),),
                             ],
                           ),
@@ -129,7 +129,7 @@ class _HomeState extends State<Home>{
                         fontWeight: FontWeight.w500
                       ),
                       textAlign: TextAlign.start,),
-
+                      const SizedBox(height: 20),
                       //Pregnancy Cycle
                       Container(
                         padding: const EdgeInsets.all(16.0),
@@ -193,36 +193,34 @@ class _HomeState extends State<Home>{
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Container(
-                                        child: CircularPercentIndicator(
-                                          radius: 40.0,
-                                          lineWidth: 10.0,
-                                          animation: true,
-                                          percent: disease.weeks_pregnant/40,
-                                          center: Text(
-                                            'Week ${disease.weeks_pregnant}', style: const TextStyle(
-                                              fontSize: 12.0,
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w400,
-                                              color: black
-                                            ),
-                                            textAlign: TextAlign.center,
+                                      CircularPercentIndicator(
+                                        radius: 50.0,
+                                        lineWidth: 10.0,
+                                        animation: true,
+                                        percent: disease.weeks_pregnant/40,
+                                        center: Text(
+                                          'Week ${disease.weeks_pregnant}', style: const TextStyle(
+                                            fontSize: 12.0,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w400,
+                                            color: black
                                           ),
-                                          backgroundColor: Colors.grey,
-                                          circularStrokeCap: CircularStrokeCap.round,
-                                          progressColor: pink,
-                                        )
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        backgroundColor: Colors.grey,
+                                        circularStrokeCap: CircularStrokeCap.round,
+                                        progressColor: pink,
                                       ),
                                       SizedBox(width: MediaQuery.of(context).size.width*0.05),
                                       Column(
                                         children: [
-                                          const Text('Phase',
+                                          const Text('Phase :',
                                             style: TextStyle(
                                               color: black,
                                               fontSize: 14,
                                               fontFamily: 'Poppins',
                                               fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w500
+                                              fontWeight: FontWeight.bold
                                             ),
                                             textAlign: TextAlign.start,),
                                           SizedBox(height: MediaQuery.of(context).size.height*0.01),
@@ -233,7 +231,7 @@ class _HomeState extends State<Home>{
                                               fontSize: 14,
                                               fontFamily: 'Poppins',
                                               fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w500
+                                              fontWeight: FontWeight.w400
                                             )),
                                           ] else if (disease.weeks_pregnant < 24 == true)...[
                                             const Text('Second Trimester',
@@ -242,7 +240,7 @@ class _HomeState extends State<Home>{
                                               fontSize: 14,
                                               fontFamily: 'Poppins',
                                               fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w500
+                                              fontWeight: FontWeight.w400
                                             )),
                                           ] else ... [
                                             const Text('Third Trimester',
@@ -251,7 +249,7 @@ class _HomeState extends State<Home>{
                                               fontSize: 12,
                                               fontFamily: 'Poppins',
                                               fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w300
+                                              fontWeight: FontWeight.w400
                                             )),
                                           ],
                                           SizedBox(height: MediaQuery.of(context).size.height*0.01),
@@ -261,7 +259,7 @@ class _HomeState extends State<Home>{
                                               fontSize: 14,
                                               fontFamily: 'Poppins',
                                               fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w500
+                                              fontWeight: FontWeight.bold
                                             )),
                                           SizedBox(height: MediaQuery.of(context).size.height*0.01),
                                           Text('${40-disease.weeks_pregnant} weeks to go!',
@@ -270,7 +268,7 @@ class _HomeState extends State<Home>{
                                               fontSize: 12,
                                               fontFamily: 'Poppins',
                                               fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w300
+                                              fontWeight: FontWeight.w400
                                             )),
                                         ],
                                       )
@@ -302,7 +300,7 @@ class _HomeState extends State<Home>{
                             padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(color: Colors.blue),
+                              border: Border.all(color: Colors.pink),
                               color: Colors.white
                             ),
                             child: Column(
@@ -317,7 +315,7 @@ class _HomeState extends State<Home>{
                                   fontWeight: FontWeight.w500
                                 )),
 
-                                SizedBox(height: MediaQuery.of(context).size.height*0.01),
+                                SizedBox(height: MediaQuery.of(context).size.height*0.02),
                                 SizedBox(
                                 width: MediaQuery.of(context).size.width*1.2,
                                 height: MediaQuery.of(context).size.height*0.05,
@@ -346,7 +344,7 @@ class _HomeState extends State<Home>{
                             padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(color: Colors.blue),
+                              border: Border.all(color: Colors.pink),
                               color: Colors.white
                             ),
                             child: Column(
@@ -363,7 +361,7 @@ class _HomeState extends State<Home>{
                                 )),
                                 
                                 //BMI
-                                SizedBox(height: MediaQuery.of(context).size.height*0.01),
+                                SizedBox(height: MediaQuery.of(context).size.height*0.02),
                                 Row(
                                   children: [
                                     const Text('BMI: ',
@@ -418,11 +416,8 @@ class _HomeState extends State<Home>{
                                 SizedBox(height: MediaQuery.of(context).size.height*0.01),
                                 Row(
                                   children: [
-
-                                    SizedBox(width: MediaQuery.of(context).size.width*0.01),
-
                                     if(disease.fatigue == true)...[
-                                      const Text('Feeling fatigue',
+                                      const Text('You\'re feeling fatigue',
                                       style: TextStyle(
                                         color: black,
                                         fontSize: 14,
@@ -431,7 +426,7 @@ class _HomeState extends State<Home>{
                                         fontWeight: FontWeight.w500
                                       )),
                                     ] else ... [
-                                      const Text('Not feeling fatigue',
+                                      const Text('You\'re not feeling fatigue',
                                       style: TextStyle(
                                         color: black,
                                         fontSize: 14,
@@ -468,15 +463,14 @@ class _HomeState extends State<Home>{
                       ],
 
                       //Blood Test
-                      if(disease.one_hour_plasma_glucose_level == 0.0)...[
-
+                      if(disease.one_hour_plasma_glucose_level == 0.0 )...[
                         InkWell(
                           child: Container(
                             margin: const EdgeInsets.all(20.0),
                             padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(color: Colors.red),
+                              border: Border.all(color: Colors.pink),
                               color: Colors.white
                             ),
                             child: Column(
@@ -490,8 +484,7 @@ class _HomeState extends State<Home>{
                                   fontStyle: FontStyle.normal,
                                   fontWeight: FontWeight.w500
                                 )),
-
-                                SizedBox(height: MediaQuery.of(context).size.height*0.01),
+                                SizedBox(height: MediaQuery.of(context).size.height*0.02),
                                 SizedBox(
                                 width: MediaQuery.of(context).size.width*1.2,
                                 height: MediaQuery.of(context).size.height*0.05,
@@ -520,7 +513,7 @@ class _HomeState extends State<Home>{
                             padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(color: Colors.red),
+                              border: Border.all(color: Colors.pink),
                               color: Colors.white
                             ),
                             child: Column(
@@ -536,7 +529,7 @@ class _HomeState extends State<Home>{
                                 )),
 
                                 //1_hour_plasma_glucose_level
-                                SizedBox(height: MediaQuery.of(context).size.height*0.01),
+                                SizedBox(height: MediaQuery.of(context).size.height*0.02),
                                 Row(
                                   children: [
                                     const Text('1 Hour Plasma Glucose Level (mg/dL): ',
@@ -599,9 +592,7 @@ class _HomeState extends State<Home>{
                                       fontStyle: FontStyle.normal,
                                       fontWeight: FontWeight.w500
                                     )),
-
                                     SizedBox(width: MediaQuery.of(context).size.width*0.01),
-
                                     Text(disease.diastolic_blood_pressure.toString(),
                                     style: const TextStyle(
                                       color: black,
@@ -827,7 +818,7 @@ class _HomeState extends State<Home>{
                             padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(color: Colors.yellow),
+                              border: Border.all(color: Colors.pink),
                               color: Colors.white
                             ),
                             child: Column(
@@ -842,7 +833,7 @@ class _HomeState extends State<Home>{
                                   fontWeight: FontWeight.w500
                                 )),
 
-                                SizedBox(height: MediaQuery.of(context).size.height*0.01),
+                                SizedBox(height: MediaQuery.of(context).size.height*0.02),
                                 SizedBox(
                                 width: MediaQuery.of(context).size.width*1.2,
                                 height: MediaQuery.of(context).size.height*0.05,
@@ -870,7 +861,7 @@ class _HomeState extends State<Home>{
                             padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(color: Colors.yellow),
+                              border: Border.all(color: Colors.pink),
                               color: Colors.white
                             ),
                             child: Column(
@@ -887,7 +878,7 @@ class _HomeState extends State<Home>{
                                 )),
                                 
                                 //urine_protein_level
-                                SizedBox(height: MediaQuery.of(context).size.height*0.01),
+                                SizedBox(height: MediaQuery.of(context).size.height*0.02),
                                 Row(
                                   children: [
                                     const Text('Urine Protein Level (mg/24 hours): ',
@@ -944,7 +935,7 @@ class _HomeState extends State<Home>{
                             padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(color: Colors.green),
+                              border: Border.all(color: Colors.pink),
                               color: Colors.white
                             ),
                             child: Column(
@@ -959,7 +950,7 @@ class _HomeState extends State<Home>{
                                   fontWeight: FontWeight.w500
                                 )),
 
-                                SizedBox(height: MediaQuery.of(context).size.height*0.01),
+                                SizedBox(height: MediaQuery.of(context).size.height*0.02),
                                 SizedBox(
                                 width: MediaQuery.of(context).size.width*1.2,
                                 height: MediaQuery.of(context).size.height*0.05,
@@ -987,7 +978,7 @@ class _HomeState extends State<Home>{
                             padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(color: Colors.green),
+                              border: Border.all(color: Colors.pink),
                               color: Colors.white
                             ),
                             child: Column(
@@ -1004,7 +995,7 @@ class _HomeState extends State<Home>{
                                 )),
                                 
                                 //hdlc
-                                SizedBox(height: MediaQuery.of(context).size.height*0.01),
+                                SizedBox(height: MediaQuery.of(context).size.height*0.02),
                                 Row(
                                   children: [
                                     const Text('HDLC Level (mmol/L): ',

@@ -56,15 +56,21 @@ class _EditBloodTestState extends State<EditBloodTest>{
 
                 //1_hour_plasma_glucose_level
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('1 Hour Plasma Glucose Level: ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  ),
+                const Row(
+                  children: [
+                    SizedBox(width: 8),
+                    Text('1 Hour Plasma Glucose Level:',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
@@ -76,18 +82,23 @@ class _EditBloodTestState extends State<EditBloodTest>{
                     });
                   },
                 ),
-                
                 //systolic_blood_pressure
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('Systolic Blood Pressure: ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  ),
+                const Row(
+                  children: [
+                    SizedBox(width: 8),
+                    Text('Systolic Blood Pressure:',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
@@ -102,15 +113,21 @@ class _EditBloodTestState extends State<EditBloodTest>{
 
                 //diastolic_blood_pressure
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('Diastolic Blood Pressure: ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  ),
+                const Row(
+                  children: [
+                    SizedBox(width: 8),
+                    Text('Diastolic Blood Pressure:',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
@@ -125,15 +142,21 @@ class _EditBloodTestState extends State<EditBloodTest>{
 
                 //haemoglobin_level
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('Haemoglobin Level: ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  ),
+                const Row(
+                  children: [
+                    SizedBox(width: 8),
+                    Text('Haemoglobin Level:',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
@@ -148,15 +171,21 @@ class _EditBloodTestState extends State<EditBloodTest>{
 
                 //calcium_level
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('Calcium Level: ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  ),
+                const Row(
+                  children: [
+                    SizedBox(width: 8),
+                    Text('Calcium Level:',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
@@ -171,15 +200,21 @@ class _EditBloodTestState extends State<EditBloodTest>{
 
                 //phosphate_level
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('Phosphate Level: ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  ),
+                const Row(
+                  children: [
+                    SizedBox(width: 8),
+                    Text('Phosphate Level:',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
@@ -194,15 +229,21 @@ class _EditBloodTestState extends State<EditBloodTest>{
 
                 //blood_creatinine_level
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('Blood Creatinine Level: ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  ),
+                const Row(
+                  children: [
+                    SizedBox(width: 8),
+                    Text('Blood Creatinine Level: ',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
@@ -217,15 +258,21 @@ class _EditBloodTestState extends State<EditBloodTest>{
 
                 //blood_urea_nitrogen_level
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('Blood Urea Nitrogen Level: ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  ),
+                const Row(
+                  children: [
+                    SizedBox(width: 8),
+                    Text('Blood Urea Nitrogen Level: ',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
@@ -240,15 +287,21 @@ class _EditBloodTestState extends State<EditBloodTest>{
 
                 //vitamin_c_level
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('Vitamin C Level: ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  ),
+                const Row(
+                  children: [
+                    SizedBox(width: 8),
+                    Text('Vitamin C Level:',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
@@ -263,15 +316,21 @@ class _EditBloodTestState extends State<EditBloodTest>{
 
                 //ldlc_level
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('LDLC Level: ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  ),
+                const Row(
+                  children: [
+                    SizedBox(width: 8),
+                    Text('LDLC Level:',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
