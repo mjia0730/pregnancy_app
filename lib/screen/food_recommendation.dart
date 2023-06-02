@@ -63,18 +63,7 @@ class _FoodRecommendationState extends State<FoodRecommendation>{
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(width: MediaQuery.of(context).size.width*0.01),
-                      if(snapshot.data?.docs[index]['catagory'] == 'salad')...[
-                        Container(
-                          width: 44,
-                          height: 44,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage('android/assets/salad.png'),
-                                  fit: BoxFit.fill)),
-                        ),
-                      ],
-
+                      
                       SizedBox(width: MediaQuery.of(context).size.width*0.05),
 
                       Column(
