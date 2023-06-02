@@ -27,17 +27,17 @@ class _FoodRecommendationState extends State<FoodRecommendation>{
         title: const Text('Recommended Food',
         style: TextStyle(
           color: black,
-          fontSize: 24,
+          fontSize: 20,
           fontFamily: 'Poppins',
           fontStyle: FontStyle.normal,
-          fontWeight: FontWeight.w500
+          fontWeight: FontWeight.w600
         ),
         textAlign: TextAlign.center,),
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        backgroundColor: pink.withOpacity(0.4),
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset('android/assets/icon/logo.png'),
+        )
       ),
       body: StreamBuilder(
         stream: meals.snapshots(),
