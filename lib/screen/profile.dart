@@ -21,10 +21,6 @@ class _ProfileState extends State<Profile>{
 
   @override
   Widget build(BuildContext context){
-    
-    DateTime now = DateTime.now();
-    String date = DateFormat.yMMMd().format(now);
-    String day = DateFormat.EEEE().format(now);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -41,62 +37,28 @@ class _ProfileState extends State<Profile>{
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Image.asset('android/assets/icon/logo.png'),
-        ),
-        actions: [
-          Container(
-            child: Column(
-              children: [
-                Text(date,
-                style: const TextStyle(
-                  color: black,
-                  fontSize: 14,
-                  fontFamily: 'Poppins',
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w400
-                ),),
-                SizedBox(height: MediaQuery.of(context).size.height*0.01),
-                Text(day,
-                style: const TextStyle(
-                  color: black,
-                  fontSize: 14,
-                  fontFamily: 'Poppins',
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w400
-                ),),
-              ],
-            )
-          )
-        ],
+        )
       ),
       body: SafeArea(
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          margin: const EdgeInsets.only(right: 20.0, left: 20.0, top: 60.0, bottom: 20.0),
+          margin: const EdgeInsets.only(right: 20.0, left: 20.0),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //Profile Pic
-                SizedBox(height: MediaQuery.of(context).size.height*0.01),
-                const CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  radius: 100,
-                  
-                ),
-
                 //Profile Box
-                SizedBox(height: MediaQuery.of(context).size.height*0.01),
+                SizedBox(height: MediaQuery.of(context).size.height*0.2),
                 Container(
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
                     border: Border.all(width: 2, color: pink),
-                    borderRadius: BorderRadius.all(Radius.circular(20))
+                    borderRadius: const BorderRadius.all(Radius.circular(20))
                   ),
                   child: Column(
                     children: [
-
                       //'Personal Info'
                       SizedBox(height: MediaQuery.of(context).size.height*0.01),
                       const Text('Personal Info',
@@ -162,7 +124,7 @@ class _ProfileState extends State<Profile>{
                 ),
 
                 //Edit Button
-                SizedBox(height: MediaQuery.of(context).size.height*0.01),
+                SizedBox(height: MediaQuery.of(context).size.height*0.03),
                 SizedBox(
                   width: MediaQuery.of(context).size.width*1.2,
                   height: MediaQuery.of(context).size.height*0.05,
@@ -183,7 +145,7 @@ class _ProfileState extends State<Profile>{
                 ),
 
                 //Sign Out Button
-                SizedBox(height: MediaQuery.of(context).size.height*0.01),
+                SizedBox(height: MediaQuery.of(context).size.height*0.03),
                 SizedBox(
                   width: MediaQuery.of(context).size.width*1.2,
                   height: MediaQuery.of(context).size.height*0.05,

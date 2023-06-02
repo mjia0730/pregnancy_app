@@ -56,15 +56,21 @@ class _EditGeneralState extends State<EditGeneral>{
 
                 //bmi
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                const Text('BMI: ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500
-                  ),
+                const Row(
+                  children: [
+                    SizedBox(width: 8),
+                    Text('BMI:',
+                      style: TextStyle(
+                        color: black,
+                        fontSize: 14,
+                        fontFamily: 'Poppins',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w500
+                      )
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
                 TextFormField(
                   textAlign: TextAlign.left,
                   decoration: TextFieldDecoration.copyWith(
@@ -81,6 +87,7 @@ class _EditGeneralState extends State<EditGeneral>{
                 SizedBox(height: MediaQuery.of(context).size.height*0.05),
                 Row(
                   children: [
+                    const SizedBox(width: 8),
                     const Text('Feeling Fatigue? ',
                       style: TextStyle(
                         color: black,

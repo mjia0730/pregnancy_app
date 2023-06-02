@@ -132,27 +132,18 @@ class _LoginScreenState extends State<LoginScreen>{
 
                 //If you have an account
                 SizedBox(height: MediaQuery.of(context).size.height*0.01),
-                const Text("If you don't have an account ",
+                const Text("If you don't have an account? ",
                   style: TextStyle(
                     color: black,
                     fontSize: 16,
                     fontFamily: 'Poppins',
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w400
+                    fontWeight: FontWeight.w500
                   )
                 ),
 
                 //You can Sign in here!
                 SizedBox(height: MediaQuery.of(context).size.height*0.01),
-                const Text('You can ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 16,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w400
-                  )
-                ),
                 InkWell(
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
@@ -177,19 +168,25 @@ class _LoginScreenState extends State<LoginScreen>{
                 Form(
                   key: _formKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      
                       //email
-                      SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                      const Text('Email',
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500
-                        )
+                      SizedBox(height: MediaQuery.of(context).size.height*0.03),
+                      const Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Text('Email',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 10),
                       TextFormField(
                         textAlign: TextAlign.left,
                         keyboardType: TextInputType.emailAddress,
@@ -212,15 +209,21 @@ class _LoginScreenState extends State<LoginScreen>{
 
                       //Password
                       SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                      const Text('Password',
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500
-                        )
+                      const Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Text('Password',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 10),
                       TextFormField(
                         obscureText: true,
                         textAlign: TextAlign.left,

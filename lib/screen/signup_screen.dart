@@ -64,7 +64,7 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
 
                 //If you have an account
                 SizedBox(height: MediaQuery.of(context).size.height*0.01),
-                const Text("If you have an account ",
+                const Text("If you have an account?",
                   style: TextStyle(
                     color: black,
                     fontSize: 16,
@@ -76,15 +76,6 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
 
                 //You can Sign in here!
                 SizedBox(height: MediaQuery.of(context).size.height*0.01),
-                const Text('You can ',
-                  style: TextStyle(
-                    color: black,
-                    fontSize: 16,
-                    fontFamily: 'Poppins',
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w400
-                  )
-                ),
                 InkWell(
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
@@ -105,7 +96,7 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
                 ),
 
                 //Form
-                SizedBox(height: MediaQuery.of(context).size.height*0.05),
+                SizedBox(height: MediaQuery.of(context).size.height*0.03),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -114,15 +105,21 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
                     children: [
                       //username
                       SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                      const Text('Username',
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500
-                        )
+                      const Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Text('Username',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 10),
                       TextFormField(
                         textAlign: TextAlign.left,
                         decoration: TextFieldDecoration.copyWith(
@@ -144,15 +141,21 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
 
                       //email
                       SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                      const Text('Email',
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500
-                        )
+                      const Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Text('Email',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 10),
                       TextFormField(
                         textAlign: TextAlign.left,
                         keyboardType: TextInputType.emailAddress,
@@ -175,15 +178,21 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
 
                       //Password
                       SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                      const Text('Password',
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500
-                        )
+                      const Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Text('Password',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 10),
                       TextFormField(
                         obscureText: true,
                         textAlign: TextAlign.left,
@@ -206,15 +215,21 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
 
                       //Confirm Password
                       SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                      const Text('Confirm your password',
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500
-                        )
+                      const Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Text('Confirm your password',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 10),
                       TextFormField(
                         obscureText: true,
                         textAlign: TextAlign.left,
@@ -236,15 +251,21 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
 
                       //Age
                       SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                      const Text('Age:',
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500
-                        )
+                      const Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Text('Age',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 10),
                       TextFormField(
                         textAlign: TextAlign.left,
                         decoration: TextFieldDecoration.copyWith(
@@ -266,15 +287,21 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
 
                       //emergency_contact
                       SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                      const Text('Emergency Contact',
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500
-                        )
+                      const Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Text('Emergency Contact',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 10),
                       TextFormField(
                         textAlign: TextAlign.left,
                         decoration: TextFieldDecoration.copyWith(
@@ -296,15 +323,21 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
 
                       //marriage_years
                       SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                      const Text('How long have you been married?',
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500
-                        )
+                      const Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Text('How long have you been married',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 10),
                       TextFormField(
                         textAlign: TextAlign.left,
                         decoration: TextFieldDecoration.copyWith(
@@ -326,15 +359,21 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
 
                       //num_children
                       SizedBox(height: MediaQuery.of(context).size.height*0.05),
-                      const Text('How many children do you have?',
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 14,
-                          fontFamily: 'Poppins',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500
-                        )
+                      const Row(
+                        children: [
+                          SizedBox(width: 8),
+                          Text('How many children do you have?',
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500
+                            )
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 10),
                       TextFormField(
                         textAlign: TextAlign.left,
                         decoration: TextFieldDecoration.copyWith(
@@ -429,6 +468,7 @@ class _RegistrationScreenState extends State<RegistrationScreen>{
                           child: const Text("Register", textAlign: TextAlign.center,),
                         ),
                       ),
+                      const SizedBox(height: 50),
                     ],
                   ),
                 )
