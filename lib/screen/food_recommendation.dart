@@ -58,6 +58,7 @@ class _FoodRecommendationState extends State<FoodRecommendation>{
 
                 int counter = 0;
                 for (var data in dietType!) {
+                  data = data.replaceAll("_", " ");
                   items.add(data);
                   counter++;
                   if (counter == 5) break;
