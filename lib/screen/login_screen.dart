@@ -123,6 +123,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   disease.blurred_vision = value['blurred_vision'];
                   disease.floating_spots = value['floating_spots'];
 
+                  final now = DateTime.now();
+                  List<String> s = disease.first_day.split('-');
+                  final day = DateTime(int.parse(s.elementAt(0)), int.parse(s.elementAt(1)), int.parse(s.elementAt(2)));
+                  disease.weeks_pregnant = (now.difference(day).inDays / 7).ceil();
+
+                  _firestore.collection('user').doc(user.uid).update({
+                    'weeks_pregnant': disease.weeks_pregnant
+                  });
+
                 }
 
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(user, disease)));
@@ -362,6 +371,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                               disease.chest_pain = value['chest_pain'];
                                               disease.blurred_vision = value['blurred_vision'];
                                               disease.floating_spots = value['floating_spots'];
+
+                                              final now = DateTime.now();
+                                              List<String> s = disease.first_day.split('-');
+                                              final day = DateTime(int.parse(s.elementAt(0)), int.parse(s.elementAt(1)), int.parse(s.elementAt(2)));
+                                              disease.weeks_pregnant = (now.difference(day).inDays / 7).ceil();
+
+                                              _firestore.collection('user').doc(user.uid).update({
+                                                'weeks_pregnant': disease.weeks_pregnant
+                                              });
                                             }
 
                                           Navigator.pushReplacement(
