@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 marriage_year: value['marriage_year'].toString(),
                 num_children: value['num_children'].toString());
 
-                if(disease.first_day != ''){
+                if(value['first_day'] != ''){
                   disease.first_day = value['first_day'];
                   disease.bmi = value['bmi'].toDouble();
                   disease.weeks_pregnant = value['weeks_pregnant'];
@@ -122,13 +122,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   disease.chest_pain = value['chest_pain'];
                   disease.blurred_vision = value['blurred_vision'];
                   disease.floating_spots = value['floating_spots'];
-
-                  DateTime now = DateTime.now();
-                  var pregnancy_date = DateTime.parse(disease.first_day);
-                  DateTime last_day = pregnancy_date.add(Duration(days: 280)).toLocal();
-                  int remaining_day = last_day.difference(now).inDays;
-                  int week = remaining_day%7;
-                  disease.weeks_pregnant = week;
 
                 }
 
@@ -346,7 +339,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             marriage_year: value['marriage_year'].toString(),
                                             num_children: value['num_children'].toString());
                                             
-                                            if(disease.first_day != ''){
+                                            if(value['first_day'] != ''){
                                               disease.first_day = value['first_day'];
                                               disease.bmi = value['bmi'].toDouble();
                                               disease.weeks_pregnant = value['weeks_pregnant'];
@@ -369,14 +362,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                               disease.chest_pain = value['chest_pain'];
                                               disease.blurred_vision = value['blurred_vision'];
                                               disease.floating_spots = value['floating_spots'];
-
-                                              DateTime now = DateTime.now();
-                                              var pregnancy_date = DateTime.parse(disease.first_day);
-                                              DateTime last_day = pregnancy_date.add(Duration(days: 280)).toLocal();
-                                              int remaining_day = last_day.difference(now).inDays;
-                                              int week = remaining_day%7;
-                                              disease.weeks_pregnant = week;
-
                                             }
 
                                           Navigator.pushReplacement(
