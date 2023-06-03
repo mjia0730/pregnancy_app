@@ -6,7 +6,7 @@ import 'package:pregnancy_app/screen/food_recommendation.dart';
 import 'package:pregnancy_app/screen/home.dart';
 import 'package:pregnancy_app/screen/profile.dart';
 
-class HomeScreen extends StatefulWidget{
+class HomeScreen extends StatefulWidget {
   final Users user;
   final Disease disease;
   HomeScreen(this.user, this.disease);
@@ -15,18 +15,18 @@ class HomeScreen extends StatefulWidget{
   _HomeScreenState createState() => _HomeScreenState(user, disease);
 }
 
-class _HomeScreenState extends State<HomeScreen>{
+class _HomeScreenState extends State<HomeScreen> {
   final Users user;
   final Disease disease;
   _HomeScreenState(this.user, this.disease);
   int index = 0;
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     final pageList = <Widget>[
       Home(user, disease),
-      FoodRecommendation(user),
-      Profile(user) 
+      FoodRecommendation(user, disease),
+      Profile(user)
     ];
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
