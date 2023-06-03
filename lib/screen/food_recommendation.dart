@@ -74,7 +74,7 @@ class _FoodRecommendationState extends State<FoodRecommendation> {
 
     // Make the POST request
     http
-        .post(
+      .post(
       url,
       headers: {"Content-Type": "application/json"},
       body: body,
@@ -123,183 +123,187 @@ class _FoodRecommendationState extends State<FoodRecommendation> {
               return const Text("Loading");
             }
 
+            final foodList = [];
+            print(recommendedMealIds);
+            for (var data in snapshot.data!.docs) {
+              if (recommendedMealIds.contains(data['Meal_Id'])) {
+                recommendedMealIds.remove(data['Meal_Id']);
+                foodList.add(data);
+              }
+            }
+
             return ListView.builder(
-              itemCount: snapshot.data?.docs.length,
+              itemCount: foodList.length,
               itemBuilder: (context, index) {
-                if (recommendedMealIds
-                    .contains(snapshot.data?.docs[index]['Meal_Id'])) {
-                  // print(snapshot.data?.docs[index]['Meal_Id']);
-                  List<String> items = [];
-                  if (snapshot.data?.docs[index]['Diet'] != null) {
-                    String? array =
-                        snapshot.data?.docs[index]['Diet'].toString();
-                    List<String>? dietType = array?.split(" ");
+                  // print(foodList[index]['Meal_Id']);
+                List<String> items = [];
+                if (foodList[index]['Diet'] != null) {
+                  String? array =
+                      foodList[index]['Diet'].toString();
+                  List<String>? dietType = array?.split(" ");
 
-                    int counter = 0;
-                    for (var data in dietType!) {
-                      data = data.replaceAll("_", " ");
-                      items.add(data);
-                      counter++;
-                      if (counter == 5) break;
-                    }
+                  int counter = 0;
+                  for (var data in dietType!) {
+                    data = data.replaceAll("_", " ");
+                    items.add(data);
+                    counter++;
+                    if (counter == 5) break;
                   }
+                }
 
-                  return InkWell(
-                    child: Container(
-                      margin: const EdgeInsets.all(10.0),
-                      padding: const EdgeInsets.only(
-                          top: 12, bottom: 4, left: 4, right: 4),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          border: Border.all(color: pink),
-                          color: Colors.white),
-                      height: MediaQuery.of(context).size.height * 0.22,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.03),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: Text(snapshot.data?.docs[index]['Name'],
-                                    style: const TextStyle(
-                                        color: black,
-                                        fontSize: 14,
-                                        fontFamily: 'Poppins',
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.bold)),
-                              ),
-                              const SizedBox(height: 8),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: Wrap(
-                                  spacing: 8.0,
-                                  runSpacing: 8.0,
-                                  children: items.map((item) {
-                                    return IntrinsicWidth(
-                                      child: Container(
-                                        padding: const EdgeInsets.all(6.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.blue[700],
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            item,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12.0,
-                                            ),
-                                          ),
-                                        ),
+                return InkWell(
+                  child: Container(
+                    margin: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.only(
+                        top: 12, bottom: 4, left: 4, right: 4),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        border: Border.all(color: pink),
+                        color: Colors.white),
+                    height: MediaQuery.of(context).size.height * 0.22,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.03),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: Text(foodList[index]['Name'],
+                                  style: const TextStyle(
+                                      color: black,
+                                      fontSize: 14,
+                                      fontFamily: 'Poppins',
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                            const SizedBox(height: 8),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: Wrap(
+                                spacing: 8.0,
+                                runSpacing: 8.0,
+                                children: items.map((item) {
+                                  return IntrinsicWidth(
+                                    child: Container(
+                                      padding: const EdgeInsets.all(6.0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.blue[700],
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  if (snapshot.data?.docs[index]['catagory'] !=
-                                      null)
-                                    IntrinsicWidth(
-                                      child: Container(
-                                        padding: const EdgeInsets.all(6.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[700],
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            snapshot.data?.docs[index]
-                                                ['catagory'],
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12.0,
-                                            ),
+                                      child: Center(
+                                        child: Text(
+                                          item,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12.0,
                                           ),
                                         ),
                                       ),
                                     ),
-                                  const SizedBox(width: 10),
-                                  if (snapshot.data?.docs[index]['Veg_Non'] ==
-                                      'veg') ...[
-                                    IntrinsicWidth(
-                                      child: Container(
-                                        padding: const EdgeInsets.all(6.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.green,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            'Veg',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12.0,
-                                            ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                if (foodList[index]['catagory'] !=
+                                    null)
+                                  IntrinsicWidth(
+                                    child: Container(
+                                      padding: const EdgeInsets.all(6.0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[700],
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          foodList[index]
+                                              ['catagory'],
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12.0,
                                           ),
                                         ),
                                       ),
-                                    )
-                                  ] else ...[
-                                    IntrinsicWidth(
-                                      child: Container(
-                                        padding: const EdgeInsets.all(6.0),
-                                        decoration: BoxDecoration(
-                                          color: Colors.orange,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: const Center(
-                                          child: Text(
-                                            'Non-Veg',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12.0,
-                                            ),
+                                    ),
+                                  ),
+                                const SizedBox(width: 10),
+                                if (foodList[index]['Veg_Non'] ==
+                                    'veg') ...[
+                                  IntrinsicWidth(
+                                    child: Container(
+                                      padding: const EdgeInsets.all(6.0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.green,
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          'Veg',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12.0,
                                           ),
                                         ),
                                       ),
-                                    )
-                                  ],
+                                    ),
+                                  )
+                                ] else ...[
+                                  IntrinsicWidth(
+                                    child: Container(
+                                      padding: const EdgeInsets.all(6.0),
+                                      decoration: BoxDecoration(
+                                        color: Colors.orange,
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          'Non-Veg',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12.0,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
                                 ],
-                              )
-                            ],
-                          )
-                        ],
-                      ),
+                              ],
+                            )
+                          ],
+                        )
+                      ],
                     ),
-                    onTap: () {
-                      Meal meal = Meal(
-                          category: snapshot.data?.docs[index]['catagory'],
-                          description: snapshot.data?.docs[index]
-                              ['description'],
-                          diet: snapshot.data?.docs[index]['Diet'],
-                          disease: snapshot.data?.docs[index]['Disease'],
-                          meal_id: snapshot.data?.docs[index]['Meal_Id'],
-                          name: snapshot.data?.docs[index]['Name'],
-                          nutrient: snapshot.data?.docs[index]['Nutrient'],
-                          price: snapshot.data!.docs[index]['Price'].toString(),
-                          veg_non: snapshot.data?.docs[index]['Veg_Non']);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MealDetailScreen(meal)),
-                      );
-                    },
-                  );
-                } else {
-                  return Container();
-                }
+                  ),
+                  onTap: () {
+                    Meal meal = Meal(
+                        category: foodList[index]['catagory'],
+                        description: foodList[index]
+                            ['description'],
+                        diet: foodList[index]['Diet'],
+                        disease: foodList[index]['Disease'],
+                        meal_id: foodList[index]['Meal_Id'],
+                        name: foodList[index]['Name'],
+                        nutrient: foodList[index]['Nutrient'],
+                        price: foodList[index]['Price'].toString(),
+                        veg_non: foodList[index]['Veg_Non']);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MealDetailScreen(meal)),
+                    );
+                  },
+                );
               },
             );
           },
