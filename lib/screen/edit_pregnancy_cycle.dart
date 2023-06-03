@@ -108,16 +108,16 @@ class _EditPregnancyCycleState extends State<EditPregnancyCycle>{
                                     ? null
                                     : () async{
                                   try{
+                                    
+                                    final now = DateTime.now();
+                                    List<String> s = disease.first_day.split('-');
+                                    final day = DateTime(int.parse(s.elementAt(0)), int.parse(s.elementAt(1)), int.parse(s.elementAt(2)));
+                                    disease.weeks_pregnant = (now.difference(day).inDays / 7).ceil();
+
                                     await _firestore.collection('user').doc(user.uid).update({
                                       'first_day': disease.first_day,
+                                      'weeks_pregnant': disease.weeks_pregnant
                                     });
-
-                                    DateTime now = DateTime.now();
-                                    var pregnancy_date = DateTime.parse(disease.first_day);
-                                    DateTime last_day = pregnancy_date.add(Duration(days: 280)).toLocal();
-                                    int remaining_day = last_day.difference(now).inDays;
-                                    int week = remaining_day%7;
-                                    disease.weeks_pregnant = week;
 
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
