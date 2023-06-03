@@ -2,9 +2,9 @@ class Disease {
   String first_day;
   double bmi;
   int weeks_pregnant;
-  bool fatigue;
+  bool fatigue = false;
   double one_hour_plasma_glucose_level;
-  bool gestational_diabetes_history;
+  bool gestational_diabetes_history = false;
   int systolic_blood_pressure;
   int diastolic_blood_pressure;
   double haemoglobin_level;
@@ -14,13 +14,22 @@ class Disease {
   double blood_creatinine_level;
   double blood_urea_nitrogen_level;
   double vitamin_c_level;
-  bool gingivitis;
+  bool gingivitis = false;
   double ldlc_level;
   double hdlc_level;
-  bool family_history_heart_disease;
-  bool chest_pain;
-  bool blurred_vision;
-  bool floating_spots;
+  bool family_history_heart_disease = false;
+  bool chest_pain = false;
+  bool blurred_vision = false;
+  bool floating_spots = false;
+  bool obesity = false;
+  bool gestational_diabetes = false;
+  bool hypertension = false;
+  bool anaemia = false;
+  bool rickets = false;
+  bool kidney_diseases = false;
+  bool scurvy = false;
+  bool heart_disease = false;
+  bool eye_disease = false;
 
   Disease({
     required this.first_day,
@@ -45,6 +54,50 @@ class Disease {
     required this.chest_pain,
     required this.blurred_vision,
     required this.floating_spots,
-
+    required this.obesity,
+    required this.gestational_diabetes,
+    required this.hypertension,
+    required this.anaemia,
+    required this.rickets,
+    required this.kidney_diseases,
+    required this.scurvy,
+    required this.heart_disease,
+    required this.eye_disease,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'first_day': first_day,
+      'bmi': bmi,
+      'weeks_pregnant': weeks_pregnant,
+      'fatigue': fatigue,
+      'one_hour_plasma_glucose_level': one_hour_plasma_glucose_level,
+      'gestational_diabetes_history': gestational_diabetes_history,
+      'systolic_blood_pressure': systolic_blood_pressure,
+      'diastolic_blood_pressure': diastolic_blood_pressure,
+      'haemoglobin_level': haemoglobin_level,
+      'calcium_level': calcium_level,
+      'phosphate_level': phosphate_level,
+      'urine_protein_level': urine_protein_level,
+      'blood_creatinine_level': blood_creatinine_level,
+      'blood_urea_nitrogen_level': blood_urea_nitrogen_level,
+      'vitamin_c_level': vitamin_c_level,
+      'gingivitis': gingivitis,
+      'ldlc_level': ldlc_level,
+      'hdlc_level': hdlc_level,
+      'family_history_heart_disease': family_history_heart_disease,
+      'chest_pain': chest_pain,
+      'blurred_vision': blurred_vision,
+      'floating_spots': floating_spots,
+      'obesity': obesity,
+      'gestational_diabetes': gestational_diabetes,
+      'hypertension': hypertension,
+      'anaemia': anaemia,
+      'rickets': rickets,
+      'kidney_diseases': kidney_diseases,
+      'scurvy': scurvy,
+      'heart_disease': heart_disease,
+      'eye_disease': eye_disease,
+    };
+  }
 }
