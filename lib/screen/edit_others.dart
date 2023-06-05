@@ -282,10 +282,7 @@ class _EditOthersState extends State<EditOthers> {
                                   }
                                   ;
                                 },
-                          child: const Text(
-                            "Edit Pregnancy Cycle",
-                            textAlign: TextAlign.center,
-                          ),
+                          child: const Text("Edit", textAlign: TextAlign.center,),
                         ),
                       ),
                     ],

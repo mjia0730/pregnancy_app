@@ -9,7 +9,6 @@ import 'package:pregnancy_app/screen/edit_others.dart';
 import 'package:pregnancy_app/screen/edit_pregnancy_cycle.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:pregnancy_app/screen/edit_urine_test.dart';
-import 'package:pregnancy_app/screen/food_recommendation.dart';
 
 class Home extends StatefulWidget {
   final Users user;
