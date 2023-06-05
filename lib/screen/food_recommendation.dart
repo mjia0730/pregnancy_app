@@ -23,6 +23,7 @@ class _FoodRecommendationState extends State<FoodRecommendation> {
   final Disease disease;
 
   List<String> recommendedMealIds = [];
+  List<String> highRiskDiseases = [];
   _FoodRecommendationState(this.user, this.disease);
   CollectionReference meals = FirebaseFirestore.instance.collection('meal');
 
@@ -54,7 +55,6 @@ class _FoodRecommendationState extends State<FoodRecommendation> {
         "fatigue": disease.fatigue,
         "gingivitis": disease.gingivitis,
         "vitamin_c_level": disease.vitamin_c_level,
-        "hyptertension": disease.hypertension,
         "ldlc_level": disease.ldlc_level,
         "hdlc_level": disease.hdlc_level,
         "family_history_heart_disease": disease.family_history_heart_disease,
@@ -72,6 +72,8 @@ class _FoodRecommendationState extends State<FoodRecommendation> {
       },
     });
 
+    // print(body);
+
     // Make the POST request
     http
         .post(
@@ -83,10 +85,15 @@ class _FoodRecommendationState extends State<FoodRecommendation> {
       if (res.statusCode == 200) {
         setState(() {
           recommendedMealIds =
-              List<String>.from(json.decode(res.body)).toSet().toList();
-
-          print(recommendedMealIds);
+              List<String>.from(json.decode(res.body)['meal_ids'])
+                  .toSet()
+                  .toList();
+          highRiskDiseases =
+              List<String>.from(json.decode(res.body)['diagnosis'])
+                  .toSet()
+                  .toList();
         });
+        // print(highRiskDiseases);
       } else {
         throw Exception('Failed to load data');
       }
@@ -126,7 +133,9 @@ class _FoodRecommendationState extends State<FoodRecommendation> {
             return ListView.builder(
               itemCount: snapshot.data?.docs.length,
               itemBuilder: (context, index) {
+                // take the first 10 meals only
                 if (recommendedMealIds
+                    .sublist(0, 10)
                     .contains(snapshot.data?.docs[index]['Meal_Id'])) {
                   // print(snapshot.data?.docs[index]['Meal_Id']);
                   List<String> items = [];
