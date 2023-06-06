@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -135,7 +136,7 @@ class _FoodRecommendationState extends State<FoodRecommendation> {
               itemBuilder: (context, index) {
                 // take the first 10 meals only
                 if (recommendedMealIds
-                    .sublist(0, 10)
+                    .sublist(0, min(recommendedMealIds.length, 10))
                     .contains(snapshot.data?.docs[index]['Meal_Id'])) {
                   // print(snapshot.data?.docs[index]['Meal_Id']);
                   List<String> items = [];
